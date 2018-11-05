@@ -12,6 +12,8 @@ public interface ChatDAO {
 
     void addChat(String name, int icon, String additionalInfo);
 
+    public void deleteChat(int id);
+
     void addMediaFile(String filename, String extention, byte[] media, String mimetype, byte[] thumbnail);
 
     void addMessage(int author, int receiver, int chat, String text, int mediaFile, Date stamp, Date editStamp, int deleted);

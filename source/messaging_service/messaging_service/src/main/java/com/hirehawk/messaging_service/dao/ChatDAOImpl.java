@@ -36,6 +36,15 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
+    public void deleteChat(int id) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Chat chat = this.getChatById(id);
+
+        session.delete(chat);
+        session.flush();
+    }
+
+    @Override
     public void addMediaFile(String filename, String extention, byte[] media, String mimetype, byte[] thumbnail) {
         ChatMediaFile mediaFile = new ChatMediaFile();
         mediaFile.setFilename(filename);
@@ -146,8 +155,8 @@ public class ChatDAOImpl implements ChatDAO {
     public List getAllUserChatMessages(int userId, int chatId) {
         Session session = this.sessionFactory.getCurrentSession();
 
-        String sqlUpd = "UPDATE ChatUser SET isNew = 0 " +
-                "WHERE chat_id = :chatId AND user_id = :userId";
+        String sqlUpd = "UPDATE ChatUser cu SET cu.isNew = 0 " +
+                "WHERE cu.chat_id = :chatId AND cu.user_id = :userId";
         Query queryUpd = session.createQuery(sqlUpd)
                 .setParameter("chatId", chatId)
                 .setParameter("userId", userId);
@@ -183,7 +192,7 @@ public class ChatDAOImpl implements ChatDAO {
 
         String sql = "DELETE ChatMessageStatus " +
                 "WHERE reciever_id = :receiverId " +
-                "AND (author_id = :authorId OR chat_id = :chatId) AND message_id <= :lastId;"
+                "AND (author_id = :authorId OR chat_id = :chatId) AND message_id <= :lastId;";
 
         Query query = session.createQuery(sql)
                 .setParameter("lastId", lastId)
@@ -238,7 +247,7 @@ public class ChatDAOImpl implements ChatDAO {
                     "(SELECT IF(a.num = 0, :chatId, NULL) AS v1, IF(a.num = 0, :userId, NULL) AS v2 " +
                     "FROM " +
                         "(SELECT COUNT(*) AS num " +
-                        "FROM ChatUsers " +
+                        "FROM ChatUser " +
                         "WHERE (chat_id = :chatId AND user_id = :userId)" +
                         ") AS a" +
                     ") AS b " +
