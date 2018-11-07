@@ -1,0 +1,15 @@
+
+1. Создаешь БД (к примеру MySQL на порту 3306)
+1.1 БД (Схему) называешь к примеру keycloak
+1.2 ALTER DATABASE keycloak CHARACTER SET utf8 COLLATE utf8_unicode_ci; (иначе не поместится таблица)
+
+2. Создаешь юзера (к примеру keycloak) CREATE USER 'keycloak'@'%' IDENTIFIED BY 'hereGoesYourPassword';
+
+3. Создаешь docker image  с помощью команды 
+sudo docker run --name keycloak --net host -e DB_VENDOR='mariadb' -e  DB_ADDR='127.0.0.1' -e DB_PORT='3306' -e DB_DATABASE='keycloak' -e DB_USER='keycloak' -e DB_PASSWORD='hereGoesYourPassword' -e KEYCLOAK_HTTP_PORT='8666' jboss/keycloak
+
+...
+
+profit
+
+for future customization: https://hub.docker.com/r/jboss/keycloak/
