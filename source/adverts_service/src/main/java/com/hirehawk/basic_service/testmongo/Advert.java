@@ -5,7 +5,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "tests")
+import java.util.Date;
+
+@Document(collection = "differentAdds")
 public class Advert {
 
     @Id
@@ -18,12 +20,14 @@ public class Advert {
     private String location;
     private Float price;
     private long numb_of_hours;
-    String date;
+    private long users_id;
+    private boolean used;
+    private Date date;
 
     public Advert() {}
 
     public Advert(ObjectId _id, String name, String category, String info, String photo,
-                  String location, Float price, long numb_of_hours, String date) {
+                  String location, Float price, long numb_of_hours, Date date) {
         this.id = _id;
         this.name = name;
         this.category = category;
@@ -35,13 +39,25 @@ public class Advert {
         this.date = date;
     }
 
+    public void update(String name, String category, String info, String photo,
+                  String location, Float price, long numb_of_hours){
+        setName(name);
+        setCategory(category);
+        setInfo(info);
+        setPhoto(photo);
+        setLocation(location);
+        setPrice(price);
+        setNumb_of_hours(numb_of_hours);
+
+    }
+
 
     public void setId(ObjectId id) {
         this.id = id;
     }
 
-    public String getId() {
-        return id.toHexString();
+    public ObjectId getId() {
+        return id;
     }
 
     public void setName(String name) {
@@ -100,11 +116,11 @@ public class Advert {
         return numb_of_hours;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 }

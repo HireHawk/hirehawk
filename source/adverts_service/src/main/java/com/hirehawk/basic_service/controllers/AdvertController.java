@@ -5,41 +5,43 @@ import com.hirehawk.basic_service.testmongo.Advert;
 import com.hirehawk.basic_service.testmongo.AdvertRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/manageAdverts")
 public class AdvertController {
 
     @Autowired
     private AdvertRepository advertsRepository;
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    public Advert createAdvert(@Valid @RequestBody Advert advert) {
-        advert.setId(ObjectId.get());
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public Advert createAdvert(@RequestBody Advert advert) {
         advertsRepository.save(advert);
         return advert;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     public Advert getAdvertById(@PathVariable("id") ObjectId id) {
         return advertsRepository.findById(id);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.PATCH)
-    public Advert updateAdvertById(@Valid @RequestBody Advert advert) {
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.PATCH)
+    public Advert updateAdvert(@RequestBody Advert newAdvert, @PathVariable("id") ObjectId id) {
+        Advert advert = advertsRepository.findById(id);
+        advert.update(newAdvert.getName(), newAdvert.getCategory(), newAdvert.getInfo(), newAdvert.getPhoto(),
+                newAdvert.getLocation(), newAdvert.getPrice(), newAdvert.getNumb_of_hours());
         advertsRepository.save(advert);
         return advert;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
     public void deleteAdvert(@PathVariable ObjectId id) {
         advertsRepository.delete(advertsRepository.findById(id));
     }

@@ -1,0 +1,4 @@
+com\hirehawk\basic_service\testmongo\AdvertRepository.class
+com\hirehawk\basic_service\controllers\AdvertController.class
+com\hirehawk\basic_service\testmongo\Advert.class
+com\hirehawk\basic_service\BasicServiceApplication.class
