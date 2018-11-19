@@ -77,29 +77,5 @@ public class TestController {
 
 
 
-/*
-    @GetMapping("/feedback")
-    public String feedback() {
-        feedbackDAO.saveFeedback(4, "some comment", new Date(2018,10,8,18,28,20),
-                1, 2, USERROLE.GIVER);
-        return "index";
-    }
 
-    @PostMapping("/fs1")
-    public String g()
-            /*(@PathVariable int mark, @PathVariable String comm, @PathVariable Date data,
-                    @PathVariable Integer who, @PathVariable Integer about, @PathVariable String role) {
-        System.out.println("cgjfjgk");
-        //  System.out.println(smth);
-        USERROLE role_;
-
-        /*System.out.println(mark+comm+data+who+about+role);
-            feedbackDAO.saveFeedback(mark, comm, data,
-                    who, about, USERROLE.BOTH);
-            System.out.println("saved");
-
-        //JsonObject jsonObject = new JSONParser().parse(json).getAsJsonObject();
-
-        return "index";
-    }*/
 }
