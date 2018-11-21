@@ -3,8 +3,7 @@ package com.hirehawk.basic_service.testmongo;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.Date;
-import java.util.List;
+
 
 // No need implementation, just one interface, and you have CRUD, thanks Spring Data
 public interface AdvertRepository extends MongoRepository<Advert, ObjectId> {

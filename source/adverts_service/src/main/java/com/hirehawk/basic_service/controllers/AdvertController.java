@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/manageAdverts")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AdvertController {
 
     @Autowired
