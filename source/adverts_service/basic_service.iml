@@ -75,5 +75,19 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.security:spring-security-test:4.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:4.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.keycloak:keycloak-spring-boot-starter:3.4.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.keycloak:keycloak-spring-boot-adapter:3.4.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.keycloak:keycloak-core:3.4.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.keycloak:keycloak-common:3.4.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcpkix-jdk15on:1.56" level="project" />
+    <orderEntry type="library" name="Maven: org.keycloak:keycloak-authz-client:3.4.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.6" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
+    <orderEntry type="library" name="Maven: org.keycloak:spring-boot-container-bundle:3.4.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.keycloak:keycloak-spring-security-adapter:3.4.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.keycloak:keycloak-adapter-spi:3.4.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.keycloak:keycloak-adapter-core:3.4.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk15on:1.56" level="project" />
   </component>
 </module>

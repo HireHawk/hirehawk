@@ -7,18 +7,29 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 
 @RestController
 @RequestMapping("/manageAdverts")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AdvertController {
 
     @Autowired
     private AdvertRepository advertsRepository;
+
+    @RequestMapping(value = "/")
+    public String start(){
+        return "<a href=\"/create\">Create Add</a> \\n" +
+                "<a href=\"/logout\">Logout</a>\\";
+    }
+
+    @RequestMapping(value = "/logout")
+    public void logout(HttpServletRequest request) throws ServletException {
+        request.logout();
+
+    }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Advert createAdvert(@RequestBody Advert advert) {
@@ -41,7 +52,7 @@ public class AdvertController {
         return advert;
     }
 
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public void deleteAdvert(@PathVariable ObjectId id) {
         advertsRepository.delete(advertsRepository.findById(id));
     }

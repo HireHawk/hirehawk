@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 @Document(collection = "differentAdds")
 public class Advert {
@@ -16,7 +17,7 @@ public class Advert {
     private String name;
     private String category;
     private String info;
-    private String photo;
+    private List<String> photo;
     private String location;
     private Float price;
     private long numb_of_hours;
@@ -26,7 +27,7 @@ public class Advert {
 
     public Advert() {}
 
-    public Advert(ObjectId _id, String name, String category, String info, String photo,
+    public Advert(ObjectId _id, String name, String category, String info, List<String> photo,
                   String location, Float price, long numb_of_hours, Date date) {
         this.id = _id;
         this.name = name;
@@ -39,7 +40,7 @@ public class Advert {
         this.date = date;
     }
 
-    public void update(String name, String category, String info, String photo,
+    public void update(String name, String category, String info, List<String> photo,
                   String location, Float price, long numb_of_hours){
         setName(name);
         setCategory(category);
@@ -84,11 +85,11 @@ public class Advert {
         return info;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(List<String> photo) {
         this.photo = photo;
     }
 
-    public String getPhoto() {
+    public List<String> getPhoto() {
         return photo;
     }
 

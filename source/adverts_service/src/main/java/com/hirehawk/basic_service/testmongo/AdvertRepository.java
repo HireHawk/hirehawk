@@ -13,6 +13,5 @@ public interface AdvertRepository extends MongoRepository<Advert, ObjectId> {
     Advert findByName(String name);
     Advert findByCategory(String category);
     Advert findByInfo(String info);
-    Advert findByPhoto(String photo);
     Advert findByLocation(String location);
 }
