@@ -96,6 +96,8 @@ fabric.properties
 
 # Package Files #
 *.jar
+# I hope jar.original should be untracked
+*.jar.original
 *.war
 *.nar
 *.ear
