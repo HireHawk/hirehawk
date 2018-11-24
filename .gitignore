@@ -105,6 +105,10 @@ fabric.properties
 *.tar.gz
 *.rar
 
+# Maven 
+*mvnw
+*mvnw.cmd
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
@@ -160,4 +164,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# now some eclipse  stuff
+local.properties
+.settings/
 # End of https://www.gitignore.io/api/java,linux,maven,windows,intellij
