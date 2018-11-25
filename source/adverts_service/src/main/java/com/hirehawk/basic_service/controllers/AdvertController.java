@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @RestController
@@ -41,6 +42,9 @@ public class AdvertController {
     public Advert getAdvertById(@PathVariable("id") ObjectId id) {
         return advertsRepository.findById(id);
     }
+
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    public List<Advert> getAllAdverts() {return advertsRepository.findAll();}
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PATCH)
     public Advert updateAdvert(@RequestBody Advert newAdvert, @PathVariable("id") ObjectId id) {
