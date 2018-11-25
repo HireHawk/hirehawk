@@ -11,12 +11,16 @@ public class Wallet extends AbstractEntity {
     @Column(name = "money_amount")
     private BigDecimal moneyAmount;
 
-    public Wallet() {
+    @Column(name = "user_id")
+    private Long userId;
 
+    public Wallet() {
+        this.moneyAmount = new BigDecimal(0);
     }
 
-    public Wallet(BigDecimal moneyAmount) {
+    public Wallet(BigDecimal moneyAmount, Long userId) {
         this.moneyAmount = moneyAmount;
+        this.userId = userId;
     }
 
     public BigDecimal getMoneyAmount() {
@@ -25,5 +29,13 @@ public class Wallet extends AbstractEntity {
 
     public void setMoneyAmount(BigDecimal moneyAmount) {
         this.moneyAmount = moneyAmount;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

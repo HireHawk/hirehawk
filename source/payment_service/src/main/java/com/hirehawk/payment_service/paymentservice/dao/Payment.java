@@ -1,39 +1,75 @@
 package com.hirehawk.payment_service.paymentservice.dao;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 public class Payment extends AbstractEntity {
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "wallet_id_from")
+    private Long walletIdFrom;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "payment_id")
-    private Set<Wallet> wallets;
+    @Column(name = "wallet_id_to")
+    private Long walletIdTo;
+
+    @Column(name = "amount")
+    private BigDecimal amount;
+
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timespamp;
+
+    private Long orderId;
 
     public Payment() {
     }
 
-    public Payment(Long userId, Set<Wallet> wallets) {
-        this.userId = userId;
-        this.wallets = wallets;
+    public Payment(Long walletIdFrom, Long walletIdTo, BigDecimal amount, Date timespamp, Long orderId) {
+        this.walletIdFrom = walletIdFrom;
+        this.walletIdTo = walletIdTo;
+        this.amount = amount;
+        this.timespamp = timespamp;
+        this.orderId = orderId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getWalletIdFrom() {
+        return walletIdFrom;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setWalletIdFrom(Long walletIdFrom) {
+        this.walletIdFrom = walletIdFrom;
     }
 
-    public Set<Wallet> getWallets() {
-        return wallets;
+    public Long getWalletIdTo() {
+        return walletIdTo;
     }
 
-    public void setWallets(Set<Wallet> wallets) {
-        this.wallets = wallets;
+    public void setWalletIdTo(Long walletIdTo) {
+        this.walletIdTo = walletIdTo;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public Date getTimespamp() {
+        return timespamp;
+    }
+
+    public void setTimespamp(Date timespamp) {
+        this.timespamp = timespamp;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 }

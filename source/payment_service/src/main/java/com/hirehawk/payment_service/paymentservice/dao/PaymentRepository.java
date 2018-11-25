@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PaymentRepository extends
         JpaRepository<Payment, Long> {
-    Payment findByUserId(Long userId);
+    boolean existsByOrderId(Long orderId);
 }
