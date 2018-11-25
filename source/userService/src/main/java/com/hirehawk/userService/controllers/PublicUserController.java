@@ -73,6 +73,7 @@ public class PublicUserController {
         userService.save(u);
         return u;
     }
+    //register functionality is not working yet
     @GetMapping(value= "/register")
     public String register(Principal principal,  @RequestBody FullUser fullUser){
     	keycloakService.register(fullUser);
