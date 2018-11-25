@@ -1,78 +1,57 @@
- package com.hirehawk.userService.dao;
+package com.hirehawk.userService.dao;
+
 
 import java.io.Serializable;
 
-import javax.persistence.*;
 //import javax.validation.constraints.Email;
 //import javax.validation.constraints.NotEmpty;
 
-@Entity
-@Table(name = "user")
-public class User implements Serializable {
+public class FullUser implements Serializable {
 
  
 	private static final long serialVersionUID = 1L;
-
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false)
+	private String login;
+	private String password;
     private String id;
-
-   // @NotEmpty
-	@Column(name = "name", nullable = false)
     private String name;
-
-   // @NotEmpty
-	@Column(name = "second_name")
     private String secondName;
-
-  //  @NotEmpty
-	@Column(name = "last_name", nullable = false)
     private String lastName;
-
-   // @Email
-	@Column(name = "email", unique = true, nullable = false)
     private String email;
-
-	@Column(name = "photo", nullable = false)
     private String photo;
 
-	@Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    public User() {
-
+    public FullUser() {
+    	
     }
 
-    public User(String id, String name, String secondName, String lastName, String email, String photo, String phoneNumber) {
-        this.id = id;
+
+    public FullUser(String login, String password, String name, String secondName, String lastName, String email, String photo, String phoneNumber) {
+    	//these will be stored in keycloak
+    	this.login = login;
+    	this.password = password;
+    	this.email = email;
         this.name = name;
         this.secondName = secondName;
         this.lastName = lastName;
-        this.email = email;
+      
         this.photo = photo;
         this.phoneNumber = phoneNumber;
     }
-    public User(String name, String secondName, String lastName, String email, String photo, String phoneNumber) {
-        this.id = id;
-        this.name = name;
-        this.secondName = secondName;
-        this.lastName = lastName;
-        this.email = email;
-        this.photo = photo;
-        this.phoneNumber = phoneNumber;
-    }
-    public User(FullUser u) {
-        this.id = u.getId();
-        this.name = u.getName();
-        this.secondName = u.getSecondName();
-        this.lastName = u.getLastName();
-        this.email = u.getEmail();
-        this.photo = u.getPhoto();
-        this.phoneNumber = u.getPhoneNumber();
-    }
 
 
+    public String getLogin() {
+        return login;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public void setLogin(String login) {
+        this.login = login;
+    }
+    public void setPassword(String pass) {
+        this.password=pass;
+    }
     public String getId() {
         return id;
     }
@@ -134,4 +113,3 @@ public class User implements Serializable {
     	return res;
     }
 }
-
