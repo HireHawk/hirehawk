@@ -48,7 +48,7 @@ public class PrivateUserController {
     	AccessToken at = session.getToken();
     	String name = at.getGivenName();
     	String lastname = at.getFamilyName();
-    	String id = at.getId();
+    	String id = at.getOtherClaims().get("user_id").toString();
         
         return "I am " +name+' '+lastname +" with ID "+ id; 
     }
