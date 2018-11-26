@@ -34,14 +34,11 @@ public class Advert {
     @Indexed(name = "user_id", type = "string")
     private String user_id;
 
-    @Indexed(name = "rented", type = "boolean")
-    private boolean rented;
-
 
     public Advert() {}
 
     public Advert(String advertId, String name, String category, String info, String location, float price,
-                  long num_of_hours, String user_id, boolean rented) {
+                  long num_of_hours, String user_id) {
         this.advertId = advertId;
         this.name = name;
         this.category = category;
@@ -50,7 +47,6 @@ public class Advert {
         this.price = price;
         this.num_of_hours = num_of_hours;
         this.user_id = user_id;
-        this.rented = rented;
     }
 
     public String getAdvertId() {
@@ -117,14 +113,6 @@ public class Advert {
         this.user_id = user_id;
     }
 
-    public boolean isRented() {
-        return rented;
-    }
-
-    public void setRented(boolean rented) {
-        this.rented = rented;
-    }
-
     @Override
     public String toString() {
         return "Advert[" +
@@ -136,7 +124,6 @@ public class Advert {
                 ", price=" + price +
                 ", num_of_hours=" + num_of_hours +
                 ", user_id=" + user_id +
-                ", rented=" + rented +
                 ']';
     }
 }
