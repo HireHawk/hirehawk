@@ -1,12 +1,11 @@
 package com.hirehawk.search_service.controllers;
 
-import com.hirehawk.search_service.models.Advert;
-import com.hirehawk.search_service.repo.AdvertRepository;
+import com.hirehawk.search_service.module.AdvertIndexService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 
 @RestController
@@ -14,18 +13,71 @@ import java.util.List;
 public class AdvertSearchController {
 
     @Autowired
-    AdvertRepository advertRepository;
+    AdvertIndexService indexService;
 
     @RequestMapping(value = "indexAdvert")
     public void indexAdvert(String id, String name, String category, String info,
-                            String location, String photo, float price, long num_of_hours, String date) {
+                            String location, float price, long num_of_hours, String user, boolean rented) {
 
-        Advert advert = new Advert(id, name, category, info, location, photo, price, num_of_hours, date);
-        System.out.println(advert.toString());
-        advertRepository.save(advert);
+        System.out.println(id);
+        indexService.addToIndex(id, name, category, info, location, price, num_of_hours, user, rented);
     }
 
-    @RequestMapping(value = "findAdvertsInCategory")
+    @RequestMapping(value = "updateAdvert")
+    public void updateAdvert(String id, String name, String category, String info,
+                            String location, String price, String num_of_hours, String user, String rented) {
+        indexService.updateIndex(id, name, category, info, location, price, num_of_hours, user, rented);
+    }
+
+    @RequestMapping(value = "updateRentStatus")
+    public void updateRentStatus(String id, boolean rented) {
+        indexService.updateRentStatus(id, rented);
+    }
+
+
+
+    @RequestMapping(value = "deleteAdvert")
+    public void deleteAdvert(String id) {
+        indexService.deleteFromIndex(id);
+    }
+
+    @RequestMapping(value = "findAdvert")
+    public String[] findAdvert(String searchValue, String category, boolean info, String location, String minPrice,
+                           String maxPrice, String num_of_hours, String user, String rented) {
+        String[] adverts = indexService.search(searchValue, category, info, location, minPrice, maxPrice,
+                num_of_hours, user, rented);
+
+        return adverts;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*    @RequestMapping(value = "findAdvertsInCategory")
     public List<Advert> findAdverts(String category) {
         List<Advert> adverts = advertRepository.findByCategory(category);
         System.out.println(adverts.toString());
@@ -100,6 +152,6 @@ public class AdvertSearchController {
             System.out.println(advert.toString());
             advertRepository.save(advert);
         }
-    }
+    }*/
 
 }
