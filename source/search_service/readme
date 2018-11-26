@@ -5,34 +5,34 @@ password: Vac
 
 api specifacation:
 
-/indexAdvert
+/advertSearch/indexAdvert
 метод: GET
 опис: додати оголошення
 параметри(keys): 
 id(String, required), name(String, required), category(String, required), info(String), location(String, required), 
 price(float, required), num_of_hours(long, required), user(String, required), rented(boolean)
 
-/updateAdvert
+/advertSearch/updateAdvert
 метод: GET
 опис: оновити оголошення
 параметри(keys): 
 id(String, required), name(String, optional), category(String, optional), info(String, optional),location(String, optional), 
 price(String, optional), num_of_hours(String, optional), user(String, optional), rented(String, optional)
 
-/deleteAdvert
+/advertSearch/deleteAdvert
 метод: GET
 опис: видалити оголошення
 параметри(keys): 
 id(String, required)
 
-/findAdvert
+/advertSearch/findAdvert
 метод: GET
 опис: знайти оголошення (повертає список id оголошень)
 параметри(keys):
 searchValue(String, optional), category(String, optional), info(boolean, optional), location(String, optional), 
 minPrice(String, optional),maxPrice(String, optional), num_of_hours(String, optional), user(String, optional), rented(String, optional)
 
-/updateRentStatus
+/advertSearch/updateRentStatus
 метод: GET
 опис: оновити поточний статус оренди
 параметри(keys): 
