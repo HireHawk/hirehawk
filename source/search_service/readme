@@ -32,13 +32,3 @@ id(String, required)
 searchValue(String, optional), category(String, optional), info(boolean, optional), location(String, optional), 
 minPrice(String, optional),maxPrice(String, optional), num_of_hours(String, optional), user(String, optional)
 
-/advertSearch/updateRentStatus
-метод: GET
-опис: оновити поточний статус оренди
-параметри(keys): 
-id(String, required), rented(boolean, required)
-
-
-
-
-
