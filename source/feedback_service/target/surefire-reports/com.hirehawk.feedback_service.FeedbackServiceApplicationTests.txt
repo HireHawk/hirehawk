@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.hirehawk.feedback_service.FeedbackServiceApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.395 sec - in com.hirehawk.feedback_service.FeedbackServiceApplicationTests
