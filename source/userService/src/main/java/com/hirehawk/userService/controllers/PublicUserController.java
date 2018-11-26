@@ -67,11 +67,11 @@ public class PublicUserController {
 	   // model.addAttribute("customers", customerDAO.findAll());
 	    return "customers";
 	}
-    @GetMapping(value = "/saveDummy")
-    public User createAdvert() {
-    	User u = new User( "dummyName", "really,second name?", "dummySurname", "dummyMail@gmail.com", "photourl!", "+38012711891" );
-        userService.save(u);
-        return u;
+    @GetMapping(value = "/updateInfo")
+    public User UpdateUserInfo(Principal principal ,@RequestBody User user) {
+    	
+        userService.save(user);
+        return user;
     }
     //register functionality is not working yet
     @GetMapping(value= "/register")
