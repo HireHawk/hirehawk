@@ -1,22 +1,42 @@
-Api:
+authorization:
 
-1) indexAdvert
-params: String id, String name, String category, String info, String location, String photo, float price, long num_of_hours, String date
-2) findAdvertsInCategory
-params: String category
-3) findAdvertsByName
-params: String name
-4) findAdvertsByNameInCategory
-params: String name, String category
-5) findAdvertsByNameAndLocation
-params: String name, String location
-6) findAdvertsByLocationAndCategory
-params: String category, String location
-7) findAdvertsByNameAndLocationInCategory
-params: String name, String location, String category
-8) findAdvertsByPriceInCategory
-params: float min, float max, String category
-9)findAdvertsByPriceAndNameInCategory
-params: float min, float max, String name, String category
-10) updateAdvert
-params: String id, String name, String category, String info, String location, String photo, float price, long num_of_hours, String date
+login: api
+password: Vac
+
+api specifacation:
+
+/indexAdvert
+метод: GET
+опис: додати оголошення
+параметри(keys): 
+id(String, required), name(String, required), category(String, required), info(String), location(String, required), price(float, required), num_of_hours(long, required), user(String, required), rented(boolean)
+
+/updateAdvert
+метод: GET
+опис: оновити оголошення
+параметри(keys): 
+id(String, required), name(String, optional), category(String, optional), info(String, optional),location(String, optional), price(String, optional), num_of_hours(String, optional), user(String, optional), rented(String, optional)
+
+/deleteAdvert
+метод: GET
+опис: видалити оголошення
+параметри(keys): 
+id(String, required)
+
+/findAdvert
+метод: GET
+опис: знайти оголошення (повертає список id оголошень)
+параметри(keys):
+searchValue(String, optional), category(String, optional), info(boolean, optional), location(String, optional), minPrice(String, optional),
+maxPrice(String, optional), num_of_hours(String, optional), user(String, optional), rented(String, optional)
+
+/updateRentStatus
+метод: GET
+опис: оновити поточний статус оренди
+параметри(keys): 
+id(String, required), rented(boolean, required)
+
+
+
+
+
