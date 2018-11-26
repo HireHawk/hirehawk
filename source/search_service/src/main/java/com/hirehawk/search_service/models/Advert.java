@@ -5,27 +5,25 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
-@SolrDocument(solrCoreName = "advert")
+
+@SolrDocument(solrCoreName = "adverts")
 public class Advert {
 
     @Id
-    @Indexed(name = "advertId", type = "string")
+    @Indexed(name = "id", type = "string")
     private String advertId;
 
-    @Indexed(name = "name", type = "string")
+    @Indexed(name = "name", type = "text_general")
     private String name;
 
     @Indexed(name = "category", type = "string")
     private String category;
 
-    @Indexed(name = "info", type = "string")
+    @Indexed(name = "info", type = "text_general")
     private String info;
 
-    @Indexed(name = "location", type = "string")
+    @Indexed(name = "location", type = "text_general")
     private String location;
-
-    @Indexed(name = "photo", type = "string")
-    private String photo;
 
     @Indexed(name = "price", type = "float")
     private float price;
@@ -33,21 +31,22 @@ public class Advert {
     @Indexed(name = "num_of_hours", type = "long")
     private long num_of_hours;
 
-    @Indexed(name = "date", type = "string")
-    private String date;
+    @Indexed(name = "user_id", type = "string")
+    private String user_id;
+
 
     public Advert() {}
 
-    public Advert(String advertId, String name, String category, String info, String location, String photo, float price, long num_of_hours, String date) {
+    public Advert(String advertId, String name, String category, String info, String location, float price,
+                  long num_of_hours, String user_id) {
         this.advertId = advertId;
         this.name = name;
         this.category = category;
         this.info = info;
         this.location = location;
-        this.photo = photo;
         this.price = price;
         this.num_of_hours = num_of_hours;
-        this.date = date;
+        this.user_id = user_id;
     }
 
     public String getAdvertId() {
@@ -90,14 +89,6 @@ public class Advert {
         this.location = location;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
     public float getPrice() {
         return price;
     }
@@ -114,12 +105,12 @@ public class Advert {
         this.num_of_hours = num_of_hours;
     }
 
-    public String getDate() {
-        return date;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     @Override
@@ -130,10 +121,9 @@ public class Advert {
                 ", category=" + category +
                 ", info=" + info +
                 ", location=" + location +
-                ", photo=" + photo +
                 ", price=" + price +
                 ", num_of_hours=" + num_of_hours +
-                ", date=" + date +
+                ", user_id=" + user_id +
                 ']';
     }
 }
