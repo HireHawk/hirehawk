@@ -69,8 +69,12 @@ class keycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.cors();
         http.authorizeRequests()
-                .antMatchers("/private/*")
-                .hasRole("user")-
+                .antMatchers("/adminChat/*")
+                .hasRole("user")
+                .antMatchers("/updateChat/*")
+                .hasRole("user")
+                .antMatchers("/chat/*")
+                .hasRole("user")
                 .anyRequest()
                 .permitAll();
     }

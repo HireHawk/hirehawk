@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Transactional
-@RequestMapping("/admin/")
+@RequestMapping("/adminChat")
 public class AdminController {
     @Autowired
     private ChatDAO chatDAO;
@@ -18,10 +18,10 @@ public class AdminController {
         chatDAO.addChat(name, icon, additionalInfo);
     }
 
-    /*@RequestMapping("/deleteMessage")
+    @RequestMapping("/deleteMessage")
     void deleteMessage(int id) {
-        chatDAO.deleteMessage();
-    }*/
+        chatDAO.deleteMessage(id);
+    }
 
     @RequestMapping("/setDialog")
     void setDialog(int firstId, int secondId) {

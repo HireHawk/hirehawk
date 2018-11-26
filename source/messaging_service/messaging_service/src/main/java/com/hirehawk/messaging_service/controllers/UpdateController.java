@@ -5,6 +5,7 @@ import com.hirehawk.messaging_service.entity.ChatMessage;
 import com.hirehawk.messaging_service.entity.ChatUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,13 +14,19 @@ import java.util.List;
 
 @RestController
 @Transactional
-@RequestMapping("/update/")
+@RequestMapping("/updateChat")
 public class UpdateController {
     @Autowired
     private ChatDAO chatDAO;
 
+    /*@RequestMapping(value = "/test", produces = "application/json")
+    public int home(int a, String s) {
+        System.out.println(s);
+        return a;
+    }*/
+
     @RequestMapping(value = "/getAllUnreadMessages", produces = "application/json")
-    List<ChatMessage> getAllUnreadMessages(int userId) {
+    List<ChatMessage> getAllUnreadMessages(@PathVariable("userId") int userId) {
         return chatDAO.getAllUnreadMessages(userId);
     }
 
@@ -36,6 +43,11 @@ public class UpdateController {
     @RequestMapping(value = "/getAllUserConversations", produces = "application/json")
     List<Object> getAllUserConversations(int userId) {
         return chatDAO.getAllUserConversations(userId);
+    }
+
+    @RequestMapping(value = "/getAllUserConversationMessages", produces = "application/json")
+    List<ChatMessage> getAllUserConversationMessages(int userId, int chatId) {
+        return chatDAO.getAllUserConversationMessages(userId, chatId);
     }
 
     @RequestMapping(value = "/checkParticipate", produces = "application/json")
