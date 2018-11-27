@@ -1,23 +1,25 @@
 package com.hirehawk.basic_service.controllers;
 
-import java.security.Principal;
-
+import com.hirehawk.basic_service.testmongo.Advert;
+import com.hirehawk.basic_service.testmongo.AdvertRepository;
 import com.hirehawk.basic_service.testmongo.DummyAdvert;
-import org.apache.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.http.HttpResponse;
+import org.bson.types.ObjectId;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;
-import com.hirehawk.basic_service.testmongo.Advert;
-import com.hirehawk.basic_service.testmongo.AdvertRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 @RestController
@@ -47,20 +49,18 @@ public class AdvertController {
         AccessToken at = session.getToken();
         String id = at.getOtherClaims().get("user_id").toString();
         advert.setUsersId(id);
+        advert.setDate(new Date());
         advertsRepository.save(advert);
-        Advert added = advertsRepository.findTopByOrdOrderByDateDesc();
+        Advert added = advertsRepository.findTopByOrderByDateDesc();
         DummyAdvert toSend = new DummyAdvert(added);
-        try {
-            sendToSolr(toSend);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        addToSolr(toSend, "http://176.37.65.30:8213/advertSearch/indexAdvert?");
+
         return toSend;
     }
 
-    public void sendToSolr(DummyAdvert advert) {
+    public void addToSolr(DummyAdvert advert, String url) {
         {
-            String url = "http://176.37.65.30:8213/advertSearch/indexAdvert?";
+            //String url = "http://176.37.65.30:8213/advertSearch/indexAdvert?";
             String params = "id=" + advert.getId() +
                     "&name=" + advert.getName() +
                     "&category=" + advert.getCategory() +
@@ -71,6 +71,7 @@ public class AdvertController {
                     "&usersId=" + advert.getUsersId();
             url += params;
             url = url.replace(" ", "%20");
+            System.out.println(url);
             try {
                 HttpResponse<String> response = Unirest.get(url)
                         .basicAuth("api", "Vac")
@@ -83,38 +84,6 @@ public class AdvertController {
     }
 
 
-//    public void sendToSolr(DummyAdvert advert) throws Exception {
-//        URL url = new URL("http://176.37.65.30:8213/advertSearch/indexAdvert");
-//
-//        Map<String, Object> params = new LinkedHashMap<>();
-//
-//        params.put("id", advert.getId());
-//        params.put("name", advert.getName());
-//        params.put("category", advert.getCategory());
-//        params.put("info", advert.getInfo());
-//        params.put("location", advert.getLocation());
-//        params.put("price", advert.getPrice());
-//        params.put("numb_of_hours", advert.getNumb_of_hours());
-//        params.put("usersID", advert.getUsersId());
-//
-//        StringBuilder postData = new StringBuilder();
-//        for (Map.Entry<String, Object> param : params.entrySet()) {
-//            if (postData.length() != 0) postData.append('&');
-//            postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
-//            postData.append('=');
-//            postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
-//        }
-//
-//        byte[] postDataBytes = postData.toString().getBytes("UTF-8");
-//
-//        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//        conn.setRequestMethod("GET");
-//        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-//        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-//        conn.setDoOutput(true);
-//        conn.getOutputStream().write(postDataBytes);
-//    }
-
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     public DummyAdvert getAdvertById(@PathVariable("id") ObjectId id) {
         Advert temp = advertsRepository.findById(id);
@@ -123,13 +92,16 @@ public class AdvertController {
     }
 
     @RequestMapping(value = "/getChosen", method = RequestMethod.GET)
-    public List<DummyAdvert> getChosenAdverts(String neededIds) {
+    public List<DummyAdvert> getChosenAdverts(@RequestBody String neededIds) {
         List<DummyAdvert> toSend = new ArrayList<>();
-        String []id = neededIds.split(",");
-        for (int i = 0; i < id.length; i++) {
-            Advert advert = advertsRepository.findById(new ObjectId(id[i]));
-            DummyAdvert temp = new DummyAdvert(advert);
-            toSend.add(temp);
+        if(neededIds!=null) {
+            neededIds = neededIds.replace(" ","");
+            String[] id = neededIds.split(",");
+            for (int i = 0; i < id.length; i++) {
+                Advert advert = advertsRepository.findById(new ObjectId(id[i]));
+                DummyAdvert temp = new DummyAdvert(advert);
+                toSend.add(temp);
+            }
         }
         return toSend;
     }
@@ -146,16 +118,34 @@ public class AdvertController {
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PATCH)
-    public Advert updateAdvert(@RequestBody Advert newAdvert, @PathVariable("id") ObjectId id) {
+    public DummyAdvert updateAdvert(@RequestBody Advert newAdvert, @PathVariable("id") ObjectId id) {
         Advert advert = advertsRepository.findById(id);
         advert.update(newAdvert.getName(), newAdvert.getCategory(), newAdvert.getInfo(), newAdvert.getPhoto(),
                 newAdvert.getLocation(), newAdvert.getPrice(), newAdvert.getNumb_of_hours());
         advertsRepository.save(advert);
-        return advert;
+        DummyAdvert toSend = new DummyAdvert(advert);
+        addToSolr(toSend, "http://176.37.65.30:8213/advertSearch/updateAdvert?");
+        return toSend;
     }
+
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public void deleteAdvert(@PathVariable ObjectId id) {
+        String idToSend = advertsRepository.findById(id).getId().toString();
         advertsRepository.delete(advertsRepository.findById(id));
+        deleteInSolr(idToSend);
+    }
+
+    public void deleteInSolr(String id){
+        String url = "http://176.37.65.30:8213/advertSearch/deleteAdvert?id="+id;
+        url = url.replace(" ", "%20");
+        try {
+            HttpResponse<String> response = Unirest.get(url)
+                    .basicAuth("api", "Vac")
+                    .header("cache-control", "no-cache")
+                    .asString();
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
     }
 }

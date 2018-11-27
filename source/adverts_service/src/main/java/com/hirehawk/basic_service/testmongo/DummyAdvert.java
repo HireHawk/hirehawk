@@ -1,8 +1,5 @@
 package com.hirehawk.basic_service.testmongo;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +30,7 @@ public class DummyAdvert {
         this.price = advert.getPrice();
         this.numb_of_hours = advert.getNumb_of_hours();
         this.date = advert.getDate();
+        this.usersId = advert.getUsersId();
     }
 
 

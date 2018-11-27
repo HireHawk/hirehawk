@@ -2,7 +2,6 @@ package com.hirehawk.basic_service.testmongo;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -27,7 +26,7 @@ public class Advert {
     public Advert() {}
 
     public Advert(ObjectId _id, String name, String category, String info, List<String> photo,
-                  String location, Float price, long numb_of_hours, Date date) {
+                  String location, Float price, long numb_of_hours) {
         this.id = _id;
         this.name = name;
         this.category = category;
@@ -36,7 +35,6 @@ public class Advert {
         this.location = location;
         this.price = price;
         this.numb_of_hours = numb_of_hours;
-        this.date = date;
     }
 
     public void update(String name, String category, String info, List<String> photo,
