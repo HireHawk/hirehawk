@@ -24,22 +24,22 @@ public class AdminController {
     }
 
     @RequestMapping("/setDialog")
-    void setDialog(int firstId, int secondId) {
+    void setDialog(String firstId, String secondId) {
         chatDAO.setDialog(firstId, secondId);
     }
 
     @RequestMapping("/addChatUser")
-    void addChatUser(int chatId, int userId) {
+    void addChatUser(String chatId, String userId) {
         chatDAO.addChatUser(chatId, userId);
     }
 
     @RequestMapping("/removeChatUser")
-    void removeChatUser(int chatId, int userId) {
+    void removeChatUser(String chatId, String userId) {
         chatDAO.removeChatUser(chatId, userId);
     }
 
     @RequestMapping("/deleteChat")
-    public void deleteChat(int id) {
+    public void deleteChat(String id) {
         chatDAO.deleteChat(id);
     }
 

@@ -35,12 +35,12 @@ public class ChatController {
     }
 
     @PostMapping("/addMessage")
-    void addMessage(int author, int receiver, int chat, String text, int mediaFile, Date stamp, int deleted) {
+    void addMessage(String author, String receiver, String chat, String text, int mediaFile, Date stamp, int deleted) {
         chatDAO.addMessage(author, receiver, chat, text, mediaFile, stamp, new Date(), deleted);
     }
 
     @RequestMapping(value = "/getChatById", produces = "application/json")
-    Chat getChatById(int id) {
+    Chat getChatById(String id) {
         return chatDAO.getChatById(id);
     }
 
@@ -70,12 +70,12 @@ public class ChatController {
     }
 
     @RequestMapping("/setNewUnreadMessage")
-    void setNewUnreadMessage(int messageId, int authorId, int receiverId, int chatId) {
+    void setNewUnreadMessage(int messageId, String authorId, String receiverId, String chatId) {
         chatDAO.setNewUnreadMessage(messageId, authorId, receiverId, chatId);
     }
 
     @RequestMapping("/setMessagesAsReaded")
-    void setMessagesAsReaded(int receiverId, int authorId, int chatId, int lastId) {
+    void setMessagesAsReaded(String receiverId, String authorId, String chatId, int lastId) {
         chatDAO.setMessagesAsReaded(receiverId, authorId, chatId, lastId);
     }
 

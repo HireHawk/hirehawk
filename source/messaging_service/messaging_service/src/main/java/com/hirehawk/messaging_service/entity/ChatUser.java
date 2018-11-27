@@ -16,30 +16,30 @@ public class ChatUser implements Serializable {
     private Integer id;
 
     @Column(name = "chat_id", nullable = false)
-    private int chat_id;
+    private String chat_id;
 
     @ManyToOne(fetch = FetchType.LAZY,optional=true)
     @JoinTable(name = "chats", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "chat_id"))
     private Chat chat;
 
     @Column(name = "user_id", nullable = false)
-    private int user_id;
+    private String user_id;
 
     @Column(name = "private_user", nullable = false)
-    private int privateUser;
+    private String privateUser;
 
     @Column(name = "is_new", nullable = false)
-    private int isNew;
+    private boolean isNew;
 
     public Integer getId() {
         return id;
     }
 
-    public int getChat_id() {
+    public String getChat_id() {
         return chat_id;
     }
 
-    public void setChat_id(int chat_id) {
+    public void setChat_id(String chat_id) {
         this.chat_id = chat_id;
     }
 
@@ -51,27 +51,27 @@ public class ChatUser implements Serializable {
         this.chat = chat;
     }
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
-    public int getPrivateUser() {
+    public String getPrivateUser() {
         return privateUser;
     }
 
-    public void setPrivateUser(int privateUser) {
+    public void setPrivateUser(String privateUser) {
         this.privateUser = privateUser;
     }
 
-    public int getIsNew() {
+    public boolean getIsNew() {
         return isNew;
     }
 
-    public void setIsNew(int isNew) {
+    public void setIsNew(boolean isNew) {
         this.isNew = isNew;
     }
 }

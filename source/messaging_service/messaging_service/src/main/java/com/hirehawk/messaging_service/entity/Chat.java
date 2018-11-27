@@ -13,7 +13,7 @@ public class Chat implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private String id;
 
     @Column(name = "name", length = 255, nullable = true)
     private String name;
