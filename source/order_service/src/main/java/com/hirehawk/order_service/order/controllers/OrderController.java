@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/manageOrders")
 @Transactional
@@ -81,6 +81,16 @@ public class OrderController {
     @RequestMapping(value="/show_not_isreturn",method = RequestMethod.GET)
     public List<Order> show_not_isreturn(String userWhoGive){
          return orderDAO.show_not_isreturn(userWhoGive);
+    }
+
+    @RequestMapping(value = "/update_payment",method = RequestMethod.POST)
+    public void update_payment(Integer id,String advert, String userWhoGive,String userWhoGet,Date date,int payment,boolean isreturn,boolean istransfer,Date start,Date finish,float price,int new_payment){
+        orderDAO.update_payment(id,advert,userWhoGive,userWhoGet,date,payment,isreturn,istransfer,start,finish,price,new_payment);
+    }
+
+    @RequestMapping(value = "/get_price",method = RequestMethod.GET)
+    public float getPrices(Integer id){
+        return orderDAO.getPrices(id);
     }
 
 }
