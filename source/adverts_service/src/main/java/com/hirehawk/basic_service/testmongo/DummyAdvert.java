@@ -2,17 +2,14 @@ package com.hirehawk.basic_service.testmongo;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 import java.util.List;
 
-@Document(collection = "differentAdds")
-public class Advert {
+public class DummyAdvert {
 
-    @Id
-    private ObjectId id;
+
+    private String id;
 
     private String name;
     private String category;
@@ -24,39 +21,26 @@ public class Advert {
     private String usersId;
     private Date date;
 
-    public Advert() {}
+    public DummyAdvert() {}
 
-    public Advert(ObjectId _id, String name, String category, String info, List<String> photo,
-                  String location, Float price, long numb_of_hours, Date date) {
-        this.id = _id;
-        this.name = name;
-        this.category = category;
-        this.info = info;
-        this.photo = photo;
-        this.location = location;
-        this.price = price;
-        this.numb_of_hours = numb_of_hours;
-        this.date = date;
-    }
-
-    public void update(String name, String category, String info, List<String> photo,
-                  String location, Float price, long numb_of_hours){
-        setName(name);
-        setCategory(category);
-        setInfo(info);
-        setPhoto(photo);
-        setLocation(location);
-        setPrice(price);
-        setNumb_of_hours(numb_of_hours);
-
+    public DummyAdvert(Advert advert) {
+        this.id = advert.getId().toString();
+        this.name = advert.getName();
+        this.category = advert.getCategory();
+        this.info = advert.getInfo();
+        this.photo = advert.getPhoto();
+        this.location = advert.getLocation();
+        this.price = advert.getPrice();
+        this.numb_of_hours = advert.getNumb_of_hours();
+        this.date = advert.getDate();
     }
 
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 

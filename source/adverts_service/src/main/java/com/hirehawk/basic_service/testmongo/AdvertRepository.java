@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface AdvertRepository extends MongoRepository<Advert, ObjectId> {
 
     Advert findById(ObjectId id);
+    Advert findTopByOrdOrderByDateDesc();
     Advert findByName(String name);
     Advert findByCategory(String category);
     Advert findByInfo(String info);
