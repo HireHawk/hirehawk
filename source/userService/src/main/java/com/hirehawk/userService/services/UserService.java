@@ -33,6 +33,23 @@ public class UserService {
         repository.save(user);
         return true;
     }
+    public User update(User user) {
+    	if(user.getId()==null)return null;
+        User u = repository.findById(user.getId());
+        if(u==null)return repository.save(user);
+        if(user.getPhoto()!=null)u.setPhoto(user.getPhoto());
+        if(user.getStatus()!=null)u.setStatus(user.getStatus());
+        if(user.getPhoneNumber()!=null)u.setPhoneNumber(user.getPhoneNumber());
+        if(user.getAverageMark()!=null)u.setAverageMark(user.getAverageMark());
+        return repository.save(u);
+        
+    }
+    public User get(String id) {
+    	User u = repository.findById(id);
+    	if(u==null)u=new User(id,null,null,null,null);
+        return u;
+        
+    }
 	
 }
 

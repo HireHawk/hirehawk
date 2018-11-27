@@ -43,6 +43,7 @@ public class User implements Serializable {
         this.averageMark = averageMark;
     }
 
+
     public User(FullUser u) {
         this.id = u.getId();
         this.photo = u.getPhoto();

@@ -31,17 +31,32 @@ public class PrivateUserController {
 	
 	@GetMapping(path = "")
 	public String index() {
-	    return "here is where all the PRIVATE endpoints are \n for example /list";
+	    return "here is where all the PRIVATE endpoints are \n for example GET /get_mine and POST /update_mine {photo:string, status:string, ...} ";
 	}
-    @PostMapping(value = "/addUser")
-    public User createAdvert(Principal principal, @RequestBody User user) {
+    //creates and updates user info
+    @PostMapping(value = "/update_mine")
+    public User UpdateUserInfo(Principal principal ,@RequestBody User user) {
     	KeycloakAuthenticationToken  token = (KeycloakAuthenticationToken) principal;
     	KeycloakPrincipal pr = (KeycloakPrincipal) token.getPrincipal();
-        userService.save(user);
-        return user;
+    	KeycloakSecurityContext session = pr.getKeycloakSecurityContext();
+    	AccessToken at = session.getToken();
+    	String id = at.getOtherClaims().get("user_id").toString();
+    	user.setId(id);
+        return userService.update(user);
     }
+    //
+    @GetMapping(value = "/get_mine")
+    public User GetUserInfo(Principal principal) {
+    	KeycloakAuthenticationToken  token = (KeycloakAuthenticationToken) principal;
+    	KeycloakPrincipal pr = (KeycloakPrincipal) token.getPrincipal();
+    	KeycloakSecurityContext session = pr.getKeycloakSecurityContext();
+    	AccessToken at = session.getToken();
+    	String id = at.getOtherClaims().get("user_id").toString();
+        return userService.get(id);
+    }
+    
     @GetMapping(value = "/whoami")
-    public String createAdvert(Principal principal ) {
+    public String whoami(Principal principal ) {
     	KeycloakAuthenticationToken  token = (KeycloakAuthenticationToken) principal;
     	KeycloakPrincipal pr = (KeycloakPrincipal) token.getPrincipal();
     	KeycloakSecurityContext session = pr.getKeycloakSecurityContext();

@@ -50,39 +50,17 @@ public class PublicUserController {
 	}	*/
 	@GetMapping(path = "/")
 	public String index() {
-	    return "here is where all the public endpoints are \n for example /list";
+	    return "here is where all the public endpoints are \n for example GET /public/get/{userID}";
 	}
 	@GetMapping(path = "")
 	public String index2Iguess() {
 	    return "here is where all the public endpoints are \n for example /list";
 	}
 	
-	@GetMapping(path = "/list")
-	public String listClients(Model model){
-		return "Not implemented yet, sorry";
-	}
-	@GetMapping(path = "/customers")
-	public String customers(Model model) {
-	  //  addCustomers();
-	   // model.addAttribute("customers", customerDAO.findAll());
-	    return "customers";
-	}
-    @GetMapping(value = "/updateInfo")
-    public User UpdateUserInfo(Principal principal ,@RequestBody User user) {
-    	
-        userService.save(user);
-        return user;
-    }
     //register functionality is not working yet
-    @GetMapping(value= "/register")
-    public String register(Principal principal,  @RequestBody FullUser fullUser){
-    	keycloakService.register(fullUser);
-    	return fullUser.getEmail();
-    }
-    @GetMapping(value= "/registerDummy")
-    public String register(Principal principal){
-    	keycloakService.registerDummy();
-    	return "to be implemented";
+    @GetMapping(value = "/get/{userId}")
+    public User GetUserInfo(@PathVariable String userId) {	
+        return userService.get(userId);
     }
     @GetMapping(value = "/whoami")
     public String createAdvert(Principal principal ) {
@@ -94,7 +72,6 @@ public class PublicUserController {
     	String name = at.getGivenName();
     	String lastname = at.getFamilyName();
     	String id = at.getOtherClaims().get("user_id").toString();
-        
         return "I am " +name+' '+lastname +" with ID "+ id ; 
     }
 }
