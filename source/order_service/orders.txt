@@ -1,0 +1,93 @@
+/manageOrders/save_without_payment
+ метод:  POST
+ опис: додати замовлення(без врахування id оплати замовлення)
+ параметри(keys): 
+String advert, String userWhoGive, String userWhoGet, Date date,Date start,
+Date finish,float price
+
+
+/manageOrders/save_with_payment
+ метод:  POST
+ опис: додати замовлення(з врахуванням id оплати замовлення)
+ параметри(keys): 
+String advert, String userWhoGive, String userWhoGet, Date date, int payment,
+Date start,Date finish,float price
+
+
+/manageOrders/update_istransfer
+ метод:  POST
+ опис:  відмітити, що товар передали (змінити значення поля istransfer)
+ параметри(keys): 
+Integer id,String advert, String userWhoGive,String userWhoGet,Date date,
+int payment,boolean isreturn,boolean istransfer,Date start,Date finish,
+float price,boolean istnew
+
+
+
+/manageOrders/del
+ метод:  POST
+ опис:  видалити замовлення за значенням id
+ параметри(keys): 
+Integer id
+
+
+/manageOrders/show_all_give
+ метод:  GET
+ опис:  отримати всі оголошення, в яких користувач надавав товар
+ параметри(keys): 
+String userWhoGive
+
+
+
+/manageOrders/show_all_get
+ метод:  GET
+ опис:  отримати всі оголошення, в яких користувач отримав товар
+ параметри(keys): 
+String userWhoGet
+
+
+
+/manageOrders/show_n_give
+ метод:  GET
+ опис:  отримати певну кількість оголошень, в яких користувач надав товар
+ параметри(keys): 
+String userWhoGive
+
+
+/manageOrders/show_n_get
+ метод:  GET
+ опис:  отримати певну кількість оголошень, в яких користувач отримав товар
+ параметри(keys): 
+String userWhoGet
+
+
+
+/manageOrders/show_depend_date_give
+ метод:  GET
+ опис:  отримати всі оголошення, в яких користувач надав товар, і, в яких передана дата 
+передує даті закінчення дії оголошення 
+ параметри(keys): 
+String userWhoGive,Date date
+
+
+/manageOrders/show_depend_date_get
+ метод:  GET
+ опис:  отримати всі оголошення, в яких користувач отримав товар, і, в яких передана дата 
+передує даті закінчення дії оголошення 
+ параметри(keys): 
+String userWhoGet,Date date
+
+
+/manageOrders/show_not_isreturn
+ метод:  GET
+ опис:  отримати всі оголошення, в яких товар ще не повернули
+ параметри(keys): 
+String userWhoGive
+
+
+
+
+
+
+
+
