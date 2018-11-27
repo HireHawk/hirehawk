@@ -1,0 +1,51 @@
+/manageFeedbacks/save_with_comment
+метод:  POST
+ опис:  зберегти оцінку разом з коментарем
+ параметри(keys): 
+ int mark, String comment, Date datetime, String userAbout, USERROLE userAboutRole,Principal userWhoLeft
+ 
+ 
+ /manageFeedbacks/save_without_comment
+метод:  POST
+ опис:  зберегти оцінку  без коментаря
+ параметри(keys): 
+ int mark,  Date datetime, String userAbout, USERROLE userAboutRole,Principal userWhoLeft
+ 
+ 
+ /manageFeedbacks/get_feedbacks
+метод:  GET
+ опис:  отримати всі відгуки про користувача в залежності від ролі
+ параметри(keys): 
+String user,USERROLE role
+
+ /manageFeedbacks/get_feedbacks_n
+метод:  GET
+ опис:  отримати певну кількість відгуків про користувача в залежності від ролі
+ параметри(keys): 
+String user,USERROLE role,int num
+
+/manageFeedbacks/get_feedbacks_without_comments
+метод:  GET
+ опис:  отримати всі відгуки  про користувача в залежності від ролі, в яких відсутні коментарі
+ параметри(keys): 
+String user,USERROLE role
+
+
+/manageFeedbacks/get_feedbacks_with_comments
+метод:  GET
+ опис:  отримати всі відгуки  про користувача в залежності від ролі, в яких наявні коментарі
+ параметри(keys): 
+String user,USERROLE role
+
+/manageFeedbacks/get_feedbacks_with_comments_n
+метод:  GET
+ опис:  отримати певну кількість відгуків  про користувача в залежності від ролі, в яких наявні коментарі
+ параметри(keys): 
+String user,USERROLE role, int num
+
+/manageFeedbacks/get_feedbacks_without_comments_n
+метод:  GET
+ опис:  отримати певну кількість відгуків  про користувача в залежності від ролі, в яких відсутні коментарі
+ параметри(keys): 
+String user,USERROLE role, int num
+
