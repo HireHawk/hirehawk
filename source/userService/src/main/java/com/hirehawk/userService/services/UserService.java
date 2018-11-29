@@ -34,14 +34,9 @@ public class UserService {
         return true;
     }
     public User update(User user) {
-    	if(user.getId()==null)return null;
-        User u = repository.findById(user.getId());
-        if(u==null)return repository.save(user);
-        if(user.getPhoto()!=null)u.setPhoto(user.getPhoto());
-        if(user.getStatus()!=null)u.setStatus(user.getStatus());
-        if(user.getPhoneNumber()!=null)u.setPhoneNumber(user.getPhoneNumber());
-        if(user.getAverageMark()!=null)u.setAverageMark(user.getAverageMark());
-        return repository.save(u);
+    	User u = user.withMissingResolved(repository);
+    	if(u==null)return null;
+        return repository.save(user);
         
     }
     public User get(String id) {

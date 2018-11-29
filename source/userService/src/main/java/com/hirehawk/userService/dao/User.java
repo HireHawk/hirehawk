@@ -27,20 +27,26 @@ public class User implements Serializable {
 	@Column(name = "status")
     private String status;
 	
-	@Column(name = "average_mark")
-    private Float averageMark;
+	@Column(name = "eval_average")
+    private Float evalAvg;
+	
+	@Column(name = "eval_number")
+	private Integer evalNumber;
+	
+	@Column(name = "eval_sum")
+	private Integer evalSum;
 
     public User() {
 
     }
 
-    public User(String id,String photo, String phoneNumber,String status, Float averageMark) {
+    public User(String id,String photo, String phoneNumber,String status, AverageMark averageMark) {
         this.id = id;
 
         this.photo = photo;
         this.phoneNumber = phoneNumber;
         this.status = status;
-        this.averageMark = averageMark;
+        this.setAverageMark(averageMark);
     }
 
 
@@ -83,13 +89,38 @@ public class User implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
-    public Float getAverageMark() {
-        return this.averageMark;
+    public void setAverageMark(AverageMark mark) {
+    	if(mark==null) return;
+        this.evalNumber = mark.getEvalNumber();
+        this.evalSum = mark.getEvalSum();
+        this.evalAvg = mark.getEvalAvg();
     }
-
-    public void setAverageMark(Float mark) {
-        this.averageMark = mark;
+    public void updateAverageMark(AverageMark mark) {
+    	if(mark==null)return;
+        if(mark.getEvalNumber()!=null)this.evalNumber = mark.getEvalNumber();
+        if(mark.getEvalSum()!=null)this.evalSum = mark.getEvalSum();
+        if(mark.getEvalAvg()!=null)this.evalAvg = mark.getEvalAvg();
     }
-
+    public AverageMark getAverageMark() {
+        return new AverageMark(this.evalSum,this.evalNumber,this.evalAvg);
+    }
+    public User withMissingResolved(UserRepository repository) {
+    	if(this.getId()==null)return null;
+        User u = repository.findById(this.getId());  
+        if(u==null)
+        	return (User) this.clone();
+        if(this.getPhoto()!=null)
+        	u.setPhoto(this.getPhoto());
+        if(this.getStatus()!=null)
+        	u.setStatus(this.getStatus());
+        if(this.getPhoneNumber()!=null)
+        	u.setPhoneNumber(this.getPhoneNumber());
+        if(this.getAverageMark()!=null)
+        	u.updateAverageMark(this.getAverageMark());
+        return u;
+    }
+    public User clone() {
+    	return new User(this.id,this.getPhoto(),this.getPhoneNumber(),this.getStatus(),this.getAverageMark());
+    }
 }
 

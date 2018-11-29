@@ -42,16 +42,21 @@ public class PrivateUserController {
     	AccessToken at = session.getToken();
     	String id = at.getOtherClaims().get("user_id").toString();
     	user.setId(id);
+    	user.setAverageMark(null);
         return userService.update(user);
     }
     //
     @GetMapping(value = "/get_mine")
     public User GetUserInfo(Principal principal) {
+    	System.out.println("get_mine!");
     	KeycloakAuthenticationToken  token = (KeycloakAuthenticationToken) principal;
     	KeycloakPrincipal pr = (KeycloakPrincipal) token.getPrincipal();
     	KeycloakSecurityContext session = pr.getKeycloakSecurityContext();
     	AccessToken at = session.getToken();
     	String id = at.getOtherClaims().get("user_id").toString();
+    	User u = userService.get(id);
+    	if(u==null)System.out.println("u is null@!!!!!!!");
+    	System.out.println("what now");
         return userService.get(id);
     }
     
