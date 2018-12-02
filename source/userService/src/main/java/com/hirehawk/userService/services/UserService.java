@@ -34,9 +34,10 @@ public class UserService {
         return true;
     }
     public User update(User user) {
+    	
     	User u = user.withMissingResolved(repository);
     	if(u==null)return null;
-        return repository.save(user);
+        return repository.save(u);
         
     }
     public User get(String id) {
