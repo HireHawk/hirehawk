@@ -80,7 +80,7 @@ public class ChatDAOImpl implements ChatDAO {
     @Override
     public Chat getChatById(String id) {
         Session session = this.sessionFactory.getCurrentSession();
-        return session.load(Chat.class,  3);
+        return session.load(Chat.class, id);
     }
 
     @Override

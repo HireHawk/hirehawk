@@ -18,12 +18,13 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 @SpringBootApplication
-
+/*
 @EnableAutoConfiguration(exclude = { //
         DataSourceAutoConfiguration.class, //
         DataSourceTransactionManagerAutoConfiguration.class, //
         HibernateJpaAutoConfiguration.class })
-
+*/
+@EnableAutoConfiguration
 public class MessagingServiceApplication {
 
     @Autowired
@@ -32,7 +33,7 @@ public class MessagingServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(MessagingServiceApplication.class, args);
     }
-
+/*
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -47,7 +48,7 @@ public class MessagingServiceApplication {
 
         return dataSource;
     }
-
+*/
     @Autowired
     @Bean(name = "sessionFactory")
     public SessionFactory getSessionFactory(DataSource dataSource) throws Exception {
@@ -71,12 +72,13 @@ public class MessagingServiceApplication {
         System.out.println("## getSessionFactory: " + sf);
         return sf;
     }
-
+/*
     @Autowired
-    @Bean(name = "transactionManager")
     public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
 
         return transactionManager;
     }
+    
+    */
 }

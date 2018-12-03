@@ -2,6 +2,9 @@ package com.hirehawk.messaging_service.entity;
 
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -11,8 +14,9 @@ public class Chat implements Serializable {
     private static final long serialVersionUID = -2054386655979281969L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @Column(name = "id")
     private String id;
 
     @Column(name = "name", length = 255, nullable = true)

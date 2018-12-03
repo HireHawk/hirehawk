@@ -24,7 +24,7 @@ public class ChatController {
     private ChatDAO chatDAO;
 
     @RequestMapping(value = "/test", produces = "application/json")
-    public int home(int a, String s) {
+    public Integer home(Integer a, String s) {
         System.out.println(s);
         return a;
     }
