@@ -12,13 +12,13 @@ public interface ChatDAO {
 
     void addChat(String name, int icon, String additionalInfo);
 
-    public void deleteChat(int id);
+    public void deleteChat(String id);
 
     void addMediaFile(String filename, String extention, byte[] media, String mimetype, byte[] thumbnail);
 
-    void addMessage(int author, int receiver, int chat, String text, int mediaFile, Date stamp, Date editStamp, int deleted);
+    void addMessage(String author, String receiver, String chat, String text, int mediaFile, Date stamp, Date editStamp, int deleted);
 
-    Chat getChatById(int id);
+    Chat getChatById(String id);
 
     ChatMediaFile getMediaFileById(int id);
 
@@ -32,31 +32,31 @@ public interface ChatDAO {
 
     void userUndoDeleteMessage(int id, Date stamp);
 
-    List<ChatMessage> getAllUserConversationMessages(int userId, int chatId);
+    List<ChatMessage> getAllUserConversationMessages(String userId, String chatId);
 
-    List<ChatMessage> getAllUserChatMessages(int userId, int chatId);
+    List<ChatMessage> getAllUserChatMessages(String userId, String chatId);
 
-    void setNewUnreadMessage(int messageId, int authorId, int receiverId, int chatId);
+    void setNewUnreadMessage(int messageId, String authorId, String receiverId, String chatId);
 
-    void setMessagesAsReaded(int receiverId, int authorId, int chatId, int lastId);
+    void setMessagesAsReaded(String receiverId, String authorId, String chatId, int lastId);
 
-    void setDialog(int firstId, int secondId);
+    void setDialog(String firstId, String secondId);
 
-    List<ChatUser> getChatUsers(int chatId);
+    List<ChatUser> getChatUsers(String chatId);
 
-    void addChatUser(int chatId, int userId);
+    void addChatUser(String chatId, String userId);
 
-    void removeChatUser(int chatId, int userId);
+    void removeChatUser(String chatId, String userId);
 
-    List<ChatMessage> getAllUnreadMessages(int userId);
+    List<ChatMessage> getAllUnreadMessages(String userId);
 
-    List getAllUnreadMessagesIds(int userId);
+    List getAllUnreadMessagesIds(String userId);
 
-    List<ChatMessage> getAllUserUnreadMessages(int userId, int chatId);
+    List<ChatMessage> getAllUserUnreadMessages(String userId, String chatId);
 
-    List<Object> getAllUserConversations(int userId);
+    List<Object> getAllUserConversations(String userId);
 
-    boolean checkParticipate(int userId, int dialogId, int chatId);
+    boolean checkParticipate(String userId, String dialogId, String chatId);
 
-    boolean hasNewChats(int userId);
+    boolean hasNewChats(String userId);
 }

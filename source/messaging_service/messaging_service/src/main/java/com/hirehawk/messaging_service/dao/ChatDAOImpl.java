@@ -36,7 +36,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public void deleteChat(int id) {
+    public void deleteChat(String id) {
         Session session = this.sessionFactory.getCurrentSession();
         Chat chat = this.getChatById(id);
 
@@ -59,7 +59,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public void addMessage(int author, int receiver, int chat, String text, int mediaFile, Date stamp, Date editStamp, int deleted) {
+    public void addMessage(String author, String receiver, String chat, String text, int mediaFile, Date stamp, Date editStamp, int deleted) {
         ChatMessage message = new ChatMessage();
         message.setAuthor_id(author);
         message.setReciever_id(receiver);
@@ -78,7 +78,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public Chat getChatById(int id) {
+    public Chat getChatById(String id) {
         Session session = this.sessionFactory.getCurrentSession();
         return session.find(Chat.class, id);
     }
@@ -119,7 +119,7 @@ public class ChatDAOImpl implements ChatDAO {
     public void userDeleteMessage(int id, Date stamp) {
         Session session = this.sessionFactory.getCurrentSession();
         ChatMessage mess = this.getMessageById(id);
-        mess.setDeleted(1);
+        mess.setDeleted(true);
         mess.setEditStamp(stamp);
 
         session.update(mess);
@@ -130,7 +130,7 @@ public class ChatDAOImpl implements ChatDAO {
     public void userUndoDeleteMessage(int id, Date stamp) {
         Session session = this.sessionFactory.getCurrentSession();
         ChatMessage mess = this.getMessageById(id);
-        mess.setDeleted(0);
+        mess.setDeleted(false);
         mess.setEditStamp(stamp);
 
         session.update(mess);
@@ -138,7 +138,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public List getAllUserConversationMessages(int userId, int chatId) {
+    public List getAllUserConversationMessages(String userId, String chatId) {
         Session session = this.sessionFactory.getCurrentSession();
 
         String sql = "FROM ChatMessage cm " +
@@ -152,7 +152,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public List getAllUserChatMessages(int userId, int chatId) {
+    public List getAllUserChatMessages(String userId, String chatId) {
         Session session = this.sessionFactory.getCurrentSession();
 
         String sqlUpd = "UPDATE ChatUser cu SET cu.isNew = 0 " +
@@ -174,7 +174,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public void setNewUnreadMessage(int messageId, int authorId, int receiverId, int chatId) {
+    public void setNewUnreadMessage(int messageId, String authorId, String receiverId, String chatId) {
         ChatMessageStatus status = new ChatMessageStatus();
         status.setMessage_id(messageId);
         status.setAuthor_id(authorId);
@@ -187,7 +187,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public void setMessagesAsReaded(int receiverId, int authorId, int chatId, int lastId) {
+    public void setMessagesAsReaded(String receiverId, String authorId, String chatId, int lastId) {
         Session session = this.sessionFactory.getCurrentSession();
 
         String sql = "DELETE ChatMessageStatus " +
@@ -203,7 +203,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public void setDialog(int firstId, int secondId) {
+    public void setDialog(String firstId, String secondId) {
         Session session = this.sessionFactory.getCurrentSession();
 
         String sql = "INSERT INTO ChatUser(user_id, private_user)" +
@@ -213,7 +213,7 @@ public class ChatDAOImpl implements ChatDAO {
                     "FROM " +
                         "(SELECT COUNT(*) AS num " +
                         "FROM chats_users " +
-                        "WHERE (chat_id = -1 AND ((user_id = $firstId AND private_user = $secondId) " +
+                        "WHERE (chat_id = '' AND ((user_id = $firstId AND private_user = $secondId) " +
                             "OR (user_id = $secondId AND private_user = $firstId)))" +
                         ") AS a" +
                     ") AS b " +
@@ -226,7 +226,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public List getChatUsers(int chatId) {
+    public List getChatUsers(String chatId) {
         Session session = this.sessionFactory.getCurrentSession();
 
         String sql = "FROM ChatUser WHERE chat_id = :chatId";
@@ -238,7 +238,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public void addChatUser(int chatId, int userId) {
+    public void addChatUser(String chatId, String userId) {
         Session session = this.sessionFactory.getCurrentSession();
 
         String sql = "INSERT INTO ChatUser (chat_id, user_id) " +
@@ -261,7 +261,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public void removeChatUser(int chatId, int userId) {
+    public void removeChatUser(String chatId, String userId) {
         Session session = this.sessionFactory.getCurrentSession();
 
         String sql = "DELETE FROM ChatUser " +
@@ -275,7 +275,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public List getAllUnreadMessages(int userId) {
+    public List getAllUnreadMessages(String userId) {
         Session session = this.sessionFactory.getCurrentSession();
 
         String sql = "FROM ChatMessage cm " +
@@ -290,7 +290,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public List getAllUnreadMessagesIds(int userId) {
+    public List getAllUnreadMessagesIds(String userId) {
         Session session = this.sessionFactory.getCurrentSession();
 
         String sql = "SELECT cm.id " +
@@ -305,7 +305,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public List getAllUserUnreadMessages(int userId, int chatId) {
+    public List getAllUserUnreadMessages(String userId, String chatId) {
         Session session = this.sessionFactory.getCurrentSession();
 
         String sql = "FROM ChatMessage cm " +
@@ -321,15 +321,15 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public List<Object> getAllUserConversations(int userId) {
+    public List<Object> getAllUserConversations(String userId) {
         Session session = this.sessionFactory.getCurrentSession();
 
         String sqlChat = "SELECT cu.chat_id " +
                 "FROM ChatUser cu " +
-                "WHERE cu.user_id = :userId AND cu.chat_id <> -1";
+                "WHERE cu.user_id = :userId AND cu.chat_id <> ''";
         String sqlDialog = "SELECT IF(cu.user_id = :userId, cu.private_user, cu.user_id) AS private " +
                 "FROM ChatUser cu " +
-                "WHERE cu.chat_id = -1 AND (cu.user_id = :userId OR cu.private_user = :userId)";
+                "WHERE cu.chat_id = '' AND (cu.user_id = :userId OR cu.private_user = :userId)";
 
         Query queryChat = session.createQuery(sqlChat)
                 .setParameter("userId", userId);
@@ -345,14 +345,14 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public boolean checkParticipate(int userId, int dialogId, int chatId) {
+    public boolean checkParticipate(String userId, String dialogId, String chatId) {
         Session session = this.sessionFactory.getCurrentSession();
 
         String sql = "SELECT COUNT(cu) " +
                 "FROM ChatUser cu " +
                 "WHERE cu.chat_id = :chatId " +
                     "AND ((cu.user_id = :userId AND cu.private_user = :dialogId) " +
-                    "OR (cu.chat_id = -1 AND cu.user_id = :dialogId AND cu.private_user = :userId))";
+                    "OR (cu.chat_id = '' AND cu.user_id = :dialogId AND cu.private_user = :userId))";
 
         Query query = session.createQuery(sql)
                 .setParameter("chatId", chatId)
@@ -364,7 +364,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public boolean hasNewChats(int userId) {
+    public boolean hasNewChats(String userId) {
         Session session = this.sessionFactory.getCurrentSession();
 
         String sql = "SELECT count(cu) FROM ChatUser cu " +

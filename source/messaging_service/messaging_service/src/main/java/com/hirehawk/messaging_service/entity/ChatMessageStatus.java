@@ -18,13 +18,13 @@ public class ChatMessageStatus implements Serializable {
     private int message_id;
 
     @Column(name = "author_id", nullable = false)
-    private int author_id;
+    private String author_id;
 
     @Column(name = "reciever_id", nullable = false)
-    private int reciever_id;
+    private String reciever_id;
 
     @Column(name = "chat_id", nullable = false)
-    private int chat_id;
+    private String chat_id;
 
     @ManyToOne(fetch = FetchType.LAZY,optional=true)
     @JoinTable(name = "chats", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "chat_id"))
@@ -46,27 +46,27 @@ public class ChatMessageStatus implements Serializable {
         this.message_id = message_id;
     }
 
-    public int getAuthor_id() {
+    public String getAuthor_id() {
         return author_id;
     }
 
-    public void setAuthor_id(int author_id) {
+    public void setAuthor_id(String author_id) {
         this.author_id = author_id;
     }
 
-    public int getReciever_id() {
+    public String getReciever_id() {
         return reciever_id;
     }
 
-    public void setReciever_id(int reciever_id) {
+    public void setReciever_id(String reciever_id) {
         this.reciever_id = reciever_id;
     }
 
-    public int getChat_id() {
+    public String getChat_id() {
         return chat_id;
     }
 
-    public void setChat_id(int chat_id) {
+    public void setChat_id(String chat_id) {
         this.chat_id = chat_id;
     }
 

@@ -6,6 +6,7 @@ import com.hirehawk.messaging_service.entity.ChatMediaFile;
 import com.hirehawk.messaging_service.entity.ChatMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,21 +17,17 @@ import java.util.List;
 
 @RestController
 @Transactional
+@RequestMapping("/chat")
 public class ChatController {
 
     @Autowired
     private ChatDAO chatDAO;
 
-    /*@RequestMapping("/test")
-    public String home() {
-        chatDAO.addChat("testChat", 1, "success");
-        chatDAO.addMediaFile("mediafile 1", "png", null, null, null);
-        Chat chat = chatDAO.getChatById(17);
-        System.out.println(chat.getName());
-        chatDAO.addMessage(1, 2, chat.getId(), "some message", 0, new Date(2018,10,8,17,10,20),
-               null, 0);
-        return "index";
-    }*/
+    @RequestMapping(value = "/test", produces = "application/json")
+    public int home(int a, String s) {
+        System.out.println(s);
+        return a;
+    }
 
     @RequestMapping("/addMediaFile")
     void addMediaFile(String extention, byte[] media, String mimetype, byte[] thumbnail) {
@@ -38,12 +35,12 @@ public class ChatController {
     }
 
     @PostMapping("/addMessage")
-    void addMessage(int author, int receiver, int chat, String text, int mediaFile, Date stamp, int deleted) {
+    void addMessage(String author, String receiver, String chat, String text, int mediaFile, Date stamp, int deleted) {
         chatDAO.addMessage(author, receiver, chat, text, mediaFile, stamp, new Date(), deleted);
     }
 
     @RequestMapping(value = "/getChatById", produces = "application/json")
-    Chat getChatById(int id) {
+    Chat getChatById(String id) {
         return chatDAO.getChatById(id);
     }
 
@@ -72,23 +69,13 @@ public class ChatController {
         chatDAO.userUndoDeleteMessage(id, new Date());
     }
 
-    @RequestMapping(value = "/getAllUserConversationMessages", produces = "application/json")
-    List<ChatMessage> getAllUserConversationMessages(int userId, int chatId) {
-        return chatDAO.getAllUserConversationMessages(userId, chatId);
-    }
-
-    @RequestMapping(value = "/getAllUserChatMessages", produces = "application/json")
-    List<ChatMessage> getAllUserChatMessages(int userId, int chatId) {
-        return chatDAO.getAllUserConversationMessages(userId, chatId);
-    }
-
     @RequestMapping("/setNewUnreadMessage")
-    void setNewUnreadMessage(int messageId, int authorId, int receiverId, int chatId) {
+    void setNewUnreadMessage(int messageId, String authorId, String receiverId, String chatId) {
         chatDAO.setNewUnreadMessage(messageId, authorId, receiverId, chatId);
     }
 
     @RequestMapping("/setMessagesAsReaded")
-    void setMessagesAsReaded(int receiverId, int authorId, int chatId, int lastId) {
+    void setMessagesAsReaded(String receiverId, String authorId, String chatId, int lastId) {
         chatDAO.setMessagesAsReaded(receiverId, authorId, chatId, lastId);
     }
 
