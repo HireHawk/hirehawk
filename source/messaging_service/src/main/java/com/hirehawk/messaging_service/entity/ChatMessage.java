@@ -50,7 +50,7 @@ public class ChatMessage implements Serializable {
     @Column(name = "deleted")
     private boolean deleted;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 

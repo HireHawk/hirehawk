@@ -7,7 +7,7 @@ import com.hirehawk.messaging_service.entity.ChatMessage;
 import com.hirehawk.messaging_service.entity.ChatMessageStatus;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
+import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,7 +59,7 @@ public class ChatDAOImpl implements ChatDAO {
     }
 
     @Override
-    public void addMessage(String author, String receiver, String chat, String text, int mediaFile, Date stamp, Date editStamp, int deleted) {
+    public void addMessage(String author, String receiver, String chat, String text, int mediaFile, Date stamp, Date editStamp, boolean deleted) {
         ChatMessage message = new ChatMessage();
         message.setAuthor_id(author);
         message.setReciever_id(receiver);
@@ -80,7 +80,7 @@ public class ChatDAOImpl implements ChatDAO {
     @Override
     public Chat getChatById(String id) {
         Session session = this.sessionFactory.getCurrentSession();
-        return session.find(Chat.class, id);
+        return session.find(Chat.class,  3);
     }
 
     @Override

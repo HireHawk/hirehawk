@@ -16,7 +16,7 @@ public interface ChatDAO {
 
     void addMediaFile(String filename, String extention, byte[] media, String mimetype, byte[] thumbnail);
 
-    void addMessage(String author, String receiver, String chat, String text, int mediaFile, Date stamp, Date editStamp, int deleted);
+    void addMessage(String author, String receiver, String chat, String text, int mediaFile, Date stamp, Date editStamp, boolean deleted);
 
     Chat getChatById(String id);
 

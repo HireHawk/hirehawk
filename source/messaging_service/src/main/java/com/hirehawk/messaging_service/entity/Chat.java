@@ -30,7 +30,7 @@ public class Chat implements Serializable {
     @OneToMany(mappedBy = "chat", fetch = FetchType.LAZY)
     private Set<ChatUser> users;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 

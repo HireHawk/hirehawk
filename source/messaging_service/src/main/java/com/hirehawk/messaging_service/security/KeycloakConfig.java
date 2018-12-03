@@ -1,4 +1,4 @@
-package com.hirehawk.userService.security;
+package com.hirehawk.messaging_service.security;
 import java.util.Arrays;
 
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
