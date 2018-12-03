@@ -35,7 +35,7 @@ public class ChatController {
     }
 
     @PostMapping("/addMessage")
-    void addMessage(String author, String receiver, String chat, String text, int mediaFile, Date stamp, int deleted) {
+    void addMessage(String author, String receiver, String chat, String text, int mediaFile, Date stamp, boolean deleted) {
         chatDAO.addMessage(author, receiver, chat, text, mediaFile, stamp, new Date(), deleted);
     }
 

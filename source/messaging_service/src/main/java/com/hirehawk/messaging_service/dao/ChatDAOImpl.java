@@ -80,19 +80,19 @@ public class ChatDAOImpl implements ChatDAO {
     @Override
     public Chat getChatById(String id) {
         Session session = this.sessionFactory.getCurrentSession();
-        return session.find(Chat.class,  3);
+        return session.load(Chat.class,  3);
     }
 
     @Override
     public ChatMediaFile getMediaFileById(int id) {
         Session session = this.sessionFactory.getCurrentSession();
-        return session.find(ChatMediaFile.class, id);
+        return session.load(ChatMediaFile.class, id);
     }
 
     @Override
     public  ChatMessage getMessageById(int id) {
         Session session = this.sessionFactory.getCurrentSession();
-        return session.find(ChatMessage.class, id);
+        return session.load(ChatMessage.class, id);
     }
 
     @Override
