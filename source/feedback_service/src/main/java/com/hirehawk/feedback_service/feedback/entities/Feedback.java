@@ -20,7 +20,7 @@ public class Feedback implements Serializable{
     private Integer id;
 
     @Column(name = "mark", nullable = false)
-    private int mark;
+    private Integer mark;
 
     @Column(name = "comment", length = 300)
     private String comment;
@@ -38,6 +38,9 @@ public class Feedback implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
+    @Column (name = "advert")
+    private String advert;
+
     public void setId(int id) {
         this.id = id;
     }
@@ -50,7 +53,7 @@ public class Feedback implements Serializable{
         return mark;
     }
 
-    public void setMark(int mark) {
+    public void setMark(Integer mark) {
         this.mark = mark;
     }
 
@@ -92,5 +95,13 @@ public class Feedback implements Serializable{
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String  getAdvert() {
+        return advert;
+    }
+
+    public void setAdvert(String  advert) {
+        this.advert = advert;
     }
 }
