@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.hirehawk.keycloakService.dao.UserData;
+import com.hirehawk.keycloakService.services.SolrService;
 import com.hirehawk.keycloakService.services.UserService;
 
 
@@ -30,19 +31,7 @@ import com.hirehawk.keycloakService.services.UserService;
 public class PublicUserController {
 	@Autowired
 	private UserService keycloakService;
-/*
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String showLoginPage(ModelMap model) {
-        model.put("name", "in28Minutes");
-        return "welcome";
-    }
-	@GetMapping("/user/{userId}/getUserInfo")
-	public String getUserInfo(@PathVariable String userId) {
-		User u = new User();
-		u = keycloakService.getUser(userId);
-		if(u==null) return "sorry, no user";
-		return u.getOpenInfo();
-	}	*/
+	
 	@GetMapping(path = "/")
 	public String index() {
 	    return "here is where all the public endpoints are \n for example GET /public/get/{userID}";
@@ -62,16 +51,13 @@ public class PublicUserController {
     public List<UserData> ListUserInfo() {
         return keycloakService.findAll();
     }
-    @GetMapping(value = "/whoami")
-    public String createAdvert(Principal principal ) {
-    	if(principal==null)return "you are not logined";
-    	KeycloakAuthenticationToken  token = (KeycloakAuthenticationToken) principal;
-    	KeycloakPrincipal pr = (KeycloakPrincipal) token.getPrincipal();
-    	KeycloakSecurityContext session = pr.getKeycloakSecurityContext();
-    	AccessToken at = session.getToken();
-    	String name = at.getGivenName();
-    	String lastname = at.getFamilyName();
-    	String id = at.getOtherClaims().get("user_id").toString();
-        return "I am " +name+' '+lastname +" with ID "+ id ; 
+    @GetMapping(value = "/pushAllToSOLR")
+    String listUserInfo(){
+    	List<UserData> il = keycloakService.findAll();
+    	for(UserData u : il) {
+    	 	SolrService.indexUser(u.getId(), u.getFirstName(), u.getLastName(), u.getEmail(), u.getUsername(), null);
+    	}
+    	return "Success! Pushed "+il.size()+" users";
+   
     }
 }

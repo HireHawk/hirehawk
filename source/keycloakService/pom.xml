@@ -32,11 +32,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!-- for solr requests -->
+        <dependency>
+    		<groupId>com.mashape.unirest</groupId>
+   			 <artifactId>unirest-java</artifactId>
+   			 <version>1.4.9</version>
+		</dependency>
     <!-- all things connected to hibernate and DAO -->
     	<dependency>
  		    <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        
         <!--  to compile on java 9 -->
         <dependency>
         	<groupId>javax.xml.bind</groupId>
