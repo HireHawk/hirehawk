@@ -34,8 +34,7 @@ public class WalletController {
                     String.format("Wallet for userId [%d] already exists", userId),
                     HttpStatus.CONFLICT);
         } else {
-            Wallet newWallet = new Wallet();
-            newWallet.setUserId(userId);
+            Wallet newWallet = new Wallet(new BigDecimal(0), userId);
             repository.save(newWallet);
             return ResponseEntity.ok(String.format("Wallet was for userId [%d] was added!", userId));
         }
@@ -44,12 +43,9 @@ public class WalletController {
     @PostMapping("/addMoney")
     public ResponseEntity<String> addMoney(@RequestParam("user_id") Long userId, @RequestParam("amount") BigDecimal amount) {
         if (repository.existsByUserId(userId)) {
-            Wallet wallet = repository.findByUserId(userId);
-            BigDecimal newAmount = wallet.getMoneyAmount().add(amount);
-            wallet.setMoneyAmount(newAmount);
-            repository.save(wallet);
+            addMoneyHelper(userId,amount);
             return ResponseEntity.ok(String.format("Money amount for userId [%d] was updated. New amount [%s]", userId,
-                    newAmount.toString()));
+                    repository.findByUserId(userId).getMoneyAmount().toString()));
         } else {
             return new ResponseEntity<>(
                     getMessageWalletNotFound(userId),
