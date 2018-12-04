@@ -23,60 +23,60 @@ public class ChatController {
     @Autowired
     private ChatDAO chatDAO;
 
-    @RequestMapping(value = "/test", produces = "application/json")
+    @GetMapping(value = "/test", produces = "application/json")
     public Integer home(Integer a, String s) {
         System.out.println(s);
         return a;
     }
 
-    @RequestMapping("/addMediaFile")
-    void addMediaFile(String extention, byte[] media, String mimetype, byte[] thumbnail) {
-        chatDAO.addMediaFile(media.toString(), extention, media, mimetype, thumbnail);
+    @PostMapping("/addMediaFile")
+    void addMediaFile(String extention, String media, String mimetype, String thumbnail) {
+    	chatDAO.addMediaFile(media.toString(), extention, media.getBytes(), mimetype, thumbnail.getBytes());
     }
 
     @PostMapping("/addMessage")
-    void addMessage(String author, String receiver, String chat, String text, int mediaFile, Date stamp, boolean deleted) {
-        chatDAO.addMessage(author, receiver, chat, text, mediaFile, stamp, new Date(), deleted);
+    void addMessage(String author, String receiver, String chat, String text, Integer mediaFile, Date stamp, Boolean deleted) {
+        chatDAO.addMessage(author, receiver, chat, text, (mediaFile==null)?-1:mediaFile, stamp, new Date(), (deleted==null)?false:deleted);
     }
 
-    @RequestMapping(value = "/getChatById", produces = "application/json")
+    @GetMapping(value = "/getChatById", produces = "application/json")
     Chat getChatById(String id) {
         return chatDAO.getChatById(id);
     }
 
-    @RequestMapping(value = "/getMediaFileById", produces = "application/json")
-    ChatMediaFile getMediaFileById(int id) {
-        return chatDAO.getMediaFileById(id);
+    @GetMapping(value = "/getMediaFileById", produces = "application/json")
+    ChatMediaFile getMediaFileById(Integer id) {
+        return chatDAO.getMediaFileById((id==null)?-1:id);
     }
 
-    @RequestMapping(value = "/getMessageById", produces = "application/json")
-    ChatMessage getMessageById(int id) {
-        return chatDAO.getMessageById(id);
+    @GetMapping(value = "/getMessageById", produces = "application/json")
+    ChatMessage getMessageById(Integer id) {
+        return chatDAO.getMessageById((id==null)?-1:id);
     }
 
-    @RequestMapping("/editMessage")
-    void editMessage(int id, String text) {
-        chatDAO.editMessage(id, text, new Date());
+    @PostMapping("/editMessage")
+    void editMessage(Integer id, String text) {
+        chatDAO.editMessage((id==null)?-1:id, text, new Date());
     }
 
-    @RequestMapping("/userDeleteMessage")
-    void userDeleteMessage(int id) {
-        chatDAO.userDeleteMessage(id, new Date());
+    @PostMapping("/userDeleteMessage")
+    void userDeleteMessage(Integer id) {
+        chatDAO.userDeleteMessage((id==null)?-1:id, new Date());
     }
 
-    @RequestMapping("/userUndoDeleteMessage")
-    void userUndoDeleteMessage(int id) {
-        chatDAO.userUndoDeleteMessage(id, new Date());
+    @PostMapping("/userUndoDeleteMessage")
+    void userUndoDeleteMessage(Integer id) {
+        chatDAO.userUndoDeleteMessage((id==null?-1:id), new Date());
     }
 
-    @RequestMapping("/setNewUnreadMessage")
-    void setNewUnreadMessage(int messageId, String authorId, String receiverId, String chatId) {
-        chatDAO.setNewUnreadMessage(messageId, authorId, receiverId, chatId);
+    @PostMapping("/setNewUnreadMessage")
+    void setNewUnreadMessage(Integer messageId, String authorId, String receiverId, String chatId) {
+        chatDAO.setNewUnreadMessage((messageId==null)?-1:messageId, authorId, receiverId, chatId);
     }
 
-    @RequestMapping("/setMessagesAsReaded")
-    void setMessagesAsReaded(String receiverId, String authorId, String chatId, int lastId) {
-        chatDAO.setMessagesAsReaded(receiverId, authorId, chatId, lastId);
+    @PostMapping("/setMessagesAsReaded")
+    void setMessagesAsReaded(String receiverId, String authorId, String chatId, Integer lastId) {
+        chatDAO.setMessagesAsReaded(receiverId, authorId, chatId, (lastId==null?-1:lastId));
     }
 
 }

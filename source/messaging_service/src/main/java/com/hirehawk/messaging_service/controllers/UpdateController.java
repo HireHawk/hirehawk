@@ -5,10 +5,12 @@ import com.hirehawk.messaging_service.entity.ChatMessage;
 import com.hirehawk.messaging_service.entity.ChatUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.keycloak.KeycloakPrincipal;
@@ -39,56 +41,56 @@ public class UpdateController {
         return a;
     }*/
 
-    @RequestMapping(value = "/getAllUnreadMessages", produces = "application/json")
+    @GetMapping(value = "/getAllUnreadMessages", produces = "application/json")
     List<ChatMessage> getAllUnreadMessages(Principal principal) {
         String userId = getUserId(principal);
 
         return chatDAO.getAllUnreadMessages(userId);
     }
 
-    @RequestMapping(value = "/getAllUnreadMessagesIds", produces = "application/json")
+    @GetMapping(value = "/getAllUnreadMessagesIds", produces = "application/json")
     List getAllUnreadMessagesIds(Principal principal) {
         String userId = getUserId(principal);
 
         return chatDAO.getAllUnreadMessagesIds(userId);
     }
 
-    @RequestMapping(value = "/getAllUserUnreadMessages", produces = "application/json")
+    @GetMapping(value = "/getAllUserUnreadMessages", produces = "application/json")
     List<ChatMessage> getAllUserUnreadMessages(Principal principal, String chatId) {
         String userId = getUserId(principal);
 
         return chatDAO.getAllUserUnreadMessages(userId, chatId);
     }
 
-    @RequestMapping(value = "/getAllUserConversations", produces = "application/json")
+    @GetMapping(value = "/getAllUserConversations", produces = "application/json")
     List<Object> getAllUserConversations(Principal principal) {
         String userId = getUserId(principal);
 
         return chatDAO.getAllUserConversations(userId);
     }
 
-    @RequestMapping(value = "/getAllUserConversationMessages", produces = "application/json")
+    @GetMapping(value = "/getAllUserConversationMessages", produces = "application/json")
     List<ChatMessage> getAllUserConversationMessages(Principal principal, String chatId) {
         String userId = getUserId(principal);
 
         return chatDAO.getAllUserConversationMessages(userId, chatId);
     }
 
-    @RequestMapping(value = "/checkParticipate", produces = "application/json")
-    boolean checkParticipate(Principal principal, String dialogId, String chatId) {
+    @GetMapping(value = "/checkParticipate", produces = "application/json")
+    Boolean checkParticipate(Principal principal, String dialogId, String chatId) {
         String userId = getUserId(principal);
 
         return chatDAO.checkParticipate(userId, dialogId, chatId);
     }
 
-    @RequestMapping(value = "/hasNewChats", produces = "application/json")
-    boolean hasNewChats(Principal principal) {
+    @GetMapping(value = "/hasNewChats", produces = "application/json")
+    Boolean hasNewChats(Principal principal) {
         String userId = getUserId(principal);
 
         return chatDAO.hasNewChats(userId);
     }
 
-    @RequestMapping(value = "/getChatUsers", produces = "application/json")
+    @GetMapping(value = "/getChatUsers", produces = "application/json")
     List<ChatUser> getChatUsers(String chatId) {
         return chatDAO.getChatUsers(chatId);
     }

@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.hirehawk</groupId>
-    <artifactId>basic_service</artifactId>
+    <artifactId>messaging_service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>basic_service</name>
-    <description>basic microservice project</description>
+    <name>messaging_service</name>
+    <description>chat microservice project</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

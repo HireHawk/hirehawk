@@ -5,6 +5,7 @@ import com.hirehawk.messaging_service.dao.ChatDAOImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 @RestController
@@ -14,32 +15,32 @@ public class AdminController {
     @Autowired
     private ChatDAOImpl chatDAO;
 
-    @RequestMapping("/addChat")
-    void addChat(String name, int icon, String additionalInfo) {
-        chatDAO.addChat(name, icon, additionalInfo);
+    @PostMapping("/addChat")
+    void addChat(String name, Integer icon, String additionalInfo) {
+        chatDAO.addChat(name, (icon==null)?-1:icon, additionalInfo);
     }
 
-    @RequestMapping("/deleteMessage")
+    @PostMapping("/deleteMessage")
     void deleteMessage(int id) {
         chatDAO.deleteMessage(id);
     }
 
-    @RequestMapping("/setDialog")
+    @PostMapping("/setDialog")
     void setDialog(String firstId, String secondId) {
         chatDAO.setDialog(firstId, secondId);
     }
 
-    @RequestMapping("/addChatUser")
+    @PostMapping("/addChatUser")
     void addChatUser(String chatId, String userId) {
         chatDAO.addChatUser(chatId, userId);
     }
 
-    @RequestMapping("/removeChatUser")
+    @PostMapping("/removeChatUser")
     void removeChatUser(String chatId, String userId) {
         chatDAO.removeChatUser(chatId, userId);
     }
 
-    @RequestMapping("/deleteChat")
+    @PostMapping("/deleteChat")
     public void deleteChat(String id) {
         chatDAO.deleteChat(id);
     }
