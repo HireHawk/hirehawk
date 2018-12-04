@@ -35,14 +35,14 @@ public class Order implements Serializable{
     private Date date;
 
     @Column(name="payment")
-    private Integer payment;
+    private Boolean payment;
 
 
     @Column(name="istransfer")
-    private boolean istransfer;
+    private Boolean istransfer;
 
     @Column(name="isreturn")
-    private boolean isreturn;
+    private Boolean isreturn;
 
     @Column(name="start",nullable = false)
     private Date start;
@@ -51,14 +51,17 @@ public class Order implements Serializable{
     private Date finish;
 
     @Column(name="price",nullable = false)
-    private float price;
+    private Float price;
+
+    @Column(name = "giveagree")
+    private Boolean giveagree;
 
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -93,15 +96,15 @@ public class Order implements Serializable{
         this.date = date;
     }
 
-    public int getPayment(){return payment;}
-    public void setPayment(int payment){this.payment=payment;}
+    public Boolean getPayment(){return payment;}
+    public void setPayment(Boolean payment){this.payment=payment;}
 
 
-    public boolean getIstransfer(){return istransfer;}
-    public void setIstransfer(boolean istransfer) {this.istransfer=istransfer;}
+    public Boolean getIstransfer(){return istransfer;}
+    public void setIstransfer(Boolean istransfer) {this.istransfer=istransfer;}
 
-    public boolean getIsreturn(){return isreturn;}
-    public void setIsreturn(boolean isreturn){this.isreturn=isreturn;}
+    public Boolean getIsreturn(){return isreturn;}
+    public void setIsreturn(Boolean isreturn){this.isreturn=isreturn;}
 
     public Date getStart(){return start;}
     public void setStart(Date start){this.start=start;}
@@ -109,8 +112,11 @@ public class Order implements Serializable{
     public Date getFinish(){return finish;}
     public void setFinish(Date finish){this.finish=finish;}
 
-    public float getPrice() {
+    public Float getPrice() {
         return price;
     }
-    public void setPrice(float price){this.price=price;}
+    public void setPrice(Float price){this.price=price;}
+
+    public Boolean getGiveagree(){return giveagree;}
+    public void setGiveagree(Boolean giveagree){this.giveagree=giveagree;}
 }
