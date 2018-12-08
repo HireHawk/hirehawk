@@ -58,6 +58,5 @@ public class PublicUserController {
     	 	SolrService.indexUser(u.getId(), u.getFirstName(), u.getLastName(), u.getEmail(), u.getUsername(), null);
     	}
     	return "Success! Pushed "+il.size()+" users";
-   
     }
 }
