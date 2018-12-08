@@ -2,6 +2,8 @@ package com.hirehawk.search_service.controllers;
 
 import com.hirehawk.search_service.module.advertsearch.AdvertIndexService;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,6 +40,7 @@ public class AdvertSearchController {
         String[] adverts = indexService.search(searchValue, category, info, location, minPrice, maxPrice,
                 num_of_hours, user);
 
+        System.out.println("search");
         return adverts;
     }
 }

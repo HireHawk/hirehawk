@@ -24,6 +24,7 @@ public class UserQueriesRepositoryImpl implements UserQueriesRepository {
             criteria = criteria.or(sn);
         }
         SimpleQuery search = new SimpleQuery(criteria);
+        search.setRows(100000);
         Page results = solrTemplate.queryForPage("users", search, User.class);
         return results.getContent();
     }

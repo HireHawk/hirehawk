@@ -13,5 +13,7 @@ public interface UserIndexService {
 
     public void deleteFromIndex(String id);
 
+    public void deleteAll();
+
     public String[] search(String searchValue);
 }

@@ -48,6 +48,12 @@ public class UserIndexServiceIml implements UserIndexService {
         repository.deleteById(id);
     }
 
+    @Transactional
+    @Override
+    public void deleteAll() {
+        repository.deleteAll();
+    }
+
     @Override
     public String[] search(String searchValue) {
         List<User> users = repository.search(searchValue);

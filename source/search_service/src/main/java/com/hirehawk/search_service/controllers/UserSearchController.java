@@ -1,12 +1,9 @@
 package com.hirehawk.search_service.controllers;
 
-import com.hirehawk.search_service.models.User;
 import com.hirehawk.search_service.module.usersearch.UserIndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/userSearch/")
@@ -27,6 +24,11 @@ public class UserSearchController {
     @RequestMapping(value = "deleteUser")
     public void deleteAdvert(String id) {
         indexService.deleteFromIndex(id);
+    }
+
+    @RequestMapping(value = "deleteAll")
+    public void deleteAll() {
+        indexService.deleteAll();
     }
 
     @RequestMapping(value = "findUser")

@@ -19,6 +19,7 @@ public class AdvertQueriesRepositoryImpl implements AdvertQueriesRepository {
     public List<Advert> search(String searchTerm, String category, boolean info, String location, String minPrice,
                                String maxPrice, String num_of_hours, String user) {
         Query search;
+      //  searchTerm = searchTerm.replace(" ", "~ ");
         if (searchTerm != null && location != null && info) {
             search = new SimpleQuery("(name:" + searchTerm + " OR info:" + searchTerm +
                                       ") AND location:" + location);
@@ -70,7 +71,8 @@ public class AdvertQueriesRepositoryImpl implements AdvertQueriesRepository {
             search.addFilterQuery(fq);
         }
 
-        Page results = solrTemplate.queryForPage("adverts", search, Advert.class);
+        search.setRows(100000);
+        Page results = solrTemplate.query("adverts", search, Advert.class);
         return results.getContent();
     }
 }

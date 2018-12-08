@@ -61,8 +61,10 @@ public class AdvertIndexServiceIml implements AdvertIndexService {
                            String maxPrice, String num_of_hours, String user) {
         List<Advert> adverts = repository.search(searchValue, category, info, location, minPrice, maxPrice, num_of_hours, user);
         String[] ids = new String[adverts.size()];
-        for (int i = 0; i < adverts.size(); i++) {
-            ids[i] = adverts.get(i).getAdvertId();
+        int j = 0;
+        for (int i = adverts.size()-1; i >= 0; i--) {
+            ids[j] = adverts.get(i).getAdvertId();
+            j++;
         }
         return ids;
     }
