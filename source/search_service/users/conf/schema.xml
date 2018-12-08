@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="users" version="1.5">
+    <fields>
+        <!-- Configure fields here -->
+		<field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
+		<field name="name" type="string" indexed="true" stored="true" multiValued="false"/>
+		<field name="surname" type="string" indexed="true" stored="true" multiValued="false"/>
+		<field name="username" type="string" indexed="true" stored="true" multiValued="false"/>
+		<field name="email" type="string" indexed="false" stored="true" multiValued="false"/>
+		<field name="phone" type="string" indexed="true" stored="true" multiValued="false"/>
+        <field name="_version_" type="long" indexed="true" stored="true"/>
+    </fields>
+ 
+	<uniqueKey>id</uniqueKey>
+     
+    <types>
+		<fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+    </types>
+</schema>
