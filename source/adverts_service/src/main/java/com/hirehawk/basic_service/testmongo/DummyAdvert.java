@@ -10,8 +10,10 @@ public class DummyAdvert {
 
     private String name;
     private String category;
+    private String subcategory;
     private String info;
-    private List<String> photo;
+    private List<String> imageLinks;
+    private String mainLink;
     private String location;
     private Float price;
     private long numb_of_hours;
@@ -24,8 +26,10 @@ public class DummyAdvert {
         this.id = advert.getId().toString();
         this.name = advert.getName();
         this.category = advert.getCategory();
+        this.subcategory = advert.getSubcategory();
         this.info = advert.getInfo();
-        this.photo = advert.getPhoto();
+        this.imageLinks = advert.getImageLinks();
+        this.mainLink =advert.getMainLink();
         this.location = advert.getLocation();
         this.price = advert.getPrice();
         this.numb_of_hours = advert.getNumb_of_hours();
@@ -58,6 +62,14 @@ public class DummyAdvert {
         return category;
     }
 
+    public void setSubcategory(String subcategory) {
+        this.subcategory = subcategory;
+    }
+
+    public String getSubcategory() {
+        return subcategory;
+    }
+
     public void setInfo(String info) {
         this.info = info;
     }
@@ -66,12 +78,20 @@ public class DummyAdvert {
         return info;
     }
 
-    public void setPhoto(List<String> photo) {
-        this.photo = photo;
+    public void setImageLinks(List<String> photo) {
+        this.imageLinks = photo;
     }
 
-    public List<String> getPhoto() {
-        return photo;
+    public List<String> getImageLinks() {
+        return imageLinks;
+    }
+
+    public void setMainLink(String photo) {
+        this.mainLink = photo;
+    }
+
+    public String getMainLink() {
+        return mainLink;
     }
 
     public void setLocation(String location) {

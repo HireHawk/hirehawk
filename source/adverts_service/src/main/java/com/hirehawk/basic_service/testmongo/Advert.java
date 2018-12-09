@@ -15,34 +15,41 @@ public class Advert {
 
     private String name;
     private String category;
+    private String subcategory;
     private String info;
-    private List<String> photo;
+    private List<String> imageLinks;
+    private String mainLink;
     private String location;
     private Float price;
     private long numb_of_hours;
     private String usersId;
     private Date date;
 
-    public Advert() {}
+    public Advert() {
+    }
 
-    public Advert(ObjectId _id, String name, String category, String info, List<String> photo,
-                  String location, Float price, long numb_of_hours) {
+    public Advert(ObjectId _id, String name, String category, String subcategory, String info, List<String> photo,
+                  String mainPhoto, String location, Float price, long numb_of_hours) {
         this.id = _id;
         this.name = name;
         this.category = category;
+        this.subcategory = subcategory;
         this.info = info;
-        this.photo = photo;
+        this.imageLinks = photo;
+        this.mainLink = mainPhoto;
         this.location = location;
         this.price = price;
         this.numb_of_hours = numb_of_hours;
     }
 
-    public void update(String name, String category, String info, List<String> photo,
-                  String location, Float price, long numb_of_hours){
+    public void update(String name, String category, String subcategory, String info, List<String> photo, String mainPhoto,
+                       String location, Float price, long numb_of_hours) {
         setName(name);
         setCategory(category);
+        setSubcategory(subcategory);
         setInfo(info);
-        setPhoto(photo);
+        setImageLinks(photo);
+        setMainLink(mainPhoto);
         setLocation(location);
         setPrice(price);
         setNumb_of_hours(numb_of_hours);
@@ -74,6 +81,14 @@ public class Advert {
         return category;
     }
 
+    public void setSubcategory(String subcategory) {
+        this.subcategory = subcategory;
+    }
+
+    public String getSubcategory() {
+        return subcategory;
+    }
+
     public void setInfo(String info) {
         this.info = info;
     }
@@ -82,12 +97,20 @@ public class Advert {
         return info;
     }
 
-    public void setPhoto(List<String> photo) {
-        this.photo = photo;
+    public void setImageLinks(List<String> photo) {
+        this.imageLinks = photo;
     }
 
-    public List<String> getPhoto() {
-        return photo;
+    public List<String> getImageLinks() {
+        return imageLinks;
+    }
+
+    public void setMainLink(String photo) {
+        this.mainLink = photo;
+    }
+
+    public String getMainLink() {
+        return mainLink;
     }
 
     public void setLocation(String location) {

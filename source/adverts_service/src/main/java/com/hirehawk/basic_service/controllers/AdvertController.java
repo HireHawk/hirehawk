@@ -3,9 +3,9 @@ package com.hirehawk.basic_service.controllers;
 import com.hirehawk.basic_service.testmongo.Advert;
 import com.hirehawk.basic_service.testmongo.AdvertRepository;
 import com.hirehawk.basic_service.testmongo.DummyAdvert;
+import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.mashape.unirest.http.HttpResponse;
 import org.bson.types.ObjectId;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.KeycloakSecurityContext;
@@ -14,8 +14,6 @@ import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,18 +26,6 @@ public class AdvertController {
 
     @Autowired
     private AdvertRepository advertsRepository;
-
-    @RequestMapping(value = "/")
-    public String start() {
-        return "<a href=\"/create\">Create Add</a> \\n" +
-                "<a href=\"/logout\">Logout</a>\\";
-    }
-
-    @RequestMapping(value = "/logout")
-    public void logout(HttpServletRequest request) throws ServletException {
-        request.logout();
-
-    }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public DummyAdvert createAdvert(Principal principal, @RequestBody Advert advert) {
@@ -64,14 +50,15 @@ public class AdvertController {
             String params = "id=" + advert.getId() +
                     "&name=" + advert.getName() +
                     "&category=" + advert.getCategory() +
+                    "*"+advert.getSubcategory()+
                     "&info=" + advert.getInfo() +
                     "&location=" + advert.getLocation() +
                     "&price=" + advert.getPrice() +
                     "&num_of_hours=" + advert.getNumb_of_hours() +
                     "&usersId=" + advert.getUsersId();
             url += params;
-            url = url.replace(" ", "%20");
             System.out.println(url);
+            url = url.replace(" ", "%20");
             try {
                 HttpResponse<String> response = Unirest.get(url)
                         .basicAuth("api", "Vac")
@@ -94,8 +81,8 @@ public class AdvertController {
     @RequestMapping(value = "/getChosen", method = RequestMethod.GET)
     public List<DummyAdvert> getChosenAdverts(@RequestBody String neededIds) {
         List<DummyAdvert> toSend = new ArrayList<>();
-        if(neededIds!=null) {
-            neededIds = neededIds.replace(" ","");
+        if (neededIds != null) {
+            neededIds = neededIds.replace(" ", "");
             String[] id = neededIds.split(",");
             for (int i = 0; i < id.length; i++) {
                 Advert advert = advertsRepository.findById(new ObjectId(id[i]));
@@ -117,11 +104,18 @@ public class AdvertController {
         return toSend;
     }
 
+    @RequestMapping(value = "/getUser/{id}", method = RequestMethod.GET)
+    public String getUser(@PathVariable("id") String advertId) {
+        Advert advert = advertsRepository.findById(new ObjectId(advertId));
+        return advert.getUsersId();
+    }
+
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PATCH)
     public DummyAdvert updateAdvert(@RequestBody Advert newAdvert, @PathVariable("id") ObjectId id) {
         Advert advert = advertsRepository.findById(id);
-        advert.update(newAdvert.getName(), newAdvert.getCategory(), newAdvert.getInfo(), newAdvert.getPhoto(),
-                newAdvert.getLocation(), newAdvert.getPrice(), newAdvert.getNumb_of_hours());
+        advert.update(newAdvert.getName(), newAdvert.getCategory(), newAdvert.getSubcategory(), newAdvert.getInfo(), newAdvert.getImageLinks(),
+                newAdvert.getMainLink(), newAdvert.getLocation(), newAdvert.getPrice(), newAdvert.getNumb_of_hours());
+        advert.setDate(new Date());
         advertsRepository.save(advert);
         DummyAdvert toSend = new DummyAdvert(advert);
         addToSolr(toSend, "http://176.37.65.30:8213/advertSearch/updateAdvert?");
@@ -136,8 +130,8 @@ public class AdvertController {
         deleteInSolr(idToSend);
     }
 
-    public void deleteInSolr(String id){
-        String url = "http://176.37.65.30:8213/advertSearch/deleteAdvert?id="+id;
+    public void deleteInSolr(String id) {
+        String url = "http://176.37.65.30:8213/advertSearch/deleteAdvert?id=" + id;
         url = url.replace(" ", "%20");
         try {
             HttpResponse<String> response = Unirest.get(url)
@@ -148,4 +142,11 @@ public class AdvertController {
             e.printStackTrace();
         }
     }
+
+    @RequestMapping(value = "/dropDB", method = RequestMethod.DELETE)
+    public void dropDB() {
+        advertsRepository.deleteAll();
+    }
+
+
 }
