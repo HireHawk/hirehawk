@@ -43,8 +43,11 @@ public class AdvertQueriesRepositoryImpl implements AdvertQueriesRepository {
             }
         }
         if (category != null) {
-            FilterQuery fq = new SimpleFilterQuery(new Criteria("category").is(category));
-            search.addFilterQuery(fq);
+            String[] categories = category.split("/");
+            for (int i = 0; i < categories.length; i++) {
+                FilterQuery fq = new SimpleFilterQuery(new Criteria("category").is(categories[i]));
+                search.addFilterQuery(fq);
+            }
         }
         if (minPrice != null || maxPrice != null) {
             String min, max;
